@@ -2,9 +2,8 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
 <footer class="bg-light py-5">
-    <div class="container">
-        <div class="d-flex justify-content-between row text-center text-lg-start gy-4">
-
+    <div class="container ">
+        <div class="row text-center text-lg-start gx-5 gy-4">
             <!-- Logo ve açıklama -->
             <div class="col-12 col-md-6 col-lg-2">
                 <img src="../../../assets/icon.png" alt="Logo" style="height: 40px;">
@@ -22,7 +21,6 @@
                 <i class="bi-google-play text-dark"></i> <a class="text-secondary" href="#" class="mt-2 d-inline-block"> Google Play <br><small>’də əldə edin</small></a>
                 </div>
             </div>
-
             <!-- Menü -->
             <div class="col-6 col-lg-2">
                 <h6 class="fw-bold">Menyu</h6>
@@ -34,7 +32,6 @@
                     <li><a href="#" class="text-decoration-none text-muted">Əlaqə</a></li>
                 </ul>
             </div>
-
             <!-- Dəstək -->
             <div class="col-6 col-lg-2">
                 <h6 class="fw-bold">Dəstək</h6>
@@ -45,7 +42,6 @@
                     <li><a href="#" class="text-decoration-none text-muted">Sual-cavablar</a></li>
                 </ul>
             </div>
-
             <!-- Əlaqə -->
             <div class="col-12 col-lg-4">
                 <h6 class="fw-bold">Əlaqə</h6>
