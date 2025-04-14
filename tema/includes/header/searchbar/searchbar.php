@@ -1,4 +1,4 @@
-<div class="container mt-2 ">
+<div class="container" style="margin-top: 120px;">
   <div class="bg-white shadow-sm rounded-pill px-3 py-2 d-flex align-items-center gap-3">
     <!-- Arama Kutusu -->
     <input type="text" class="form-control border-0 flex-grow-1" placeholder="Şəhər, Metro, Kompleks, Ünvan ..." />

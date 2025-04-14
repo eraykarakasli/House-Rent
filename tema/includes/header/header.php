@@ -14,7 +14,7 @@
 </head>
 
 <body class="">
-    <nav class="navbar navbar-expand-lg bg-white border-bottom" style="min-height: 100px;">
+    <nav class="navbar navbar-expand-lg bg-white border-bottom fixed-top" style="min-height: 100px;">
         <div class="container">
             <!-- Sol logo -->
             <a class="navbar-brand d-flex align-items-center gap-2" href="#">
