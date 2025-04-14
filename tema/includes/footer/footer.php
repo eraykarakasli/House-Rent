@@ -3,20 +3,24 @@
 
 <footer class="bg-light py-5">
     <div class="container">
-        <div class="row text-center text-lg-start gy-4">
+        <div class="d-flex justify-content-between row text-center text-lg-start gy-4">
 
             <!-- Logo ve açıklama -->
             <div class="col-12 col-md-6 col-lg-2">
-                <img src="logo.png" alt="Logo" style="height: 40px;">
+                <img src="../../../assets/icon.png" alt="Logo" style="height: 40px;">
                 <p class="mt-2 text-muted">Daşınmaz əmlak, kirayə axtarışı və analitika platforması.</p>
                 <small class="text-muted">© Copyright 2025 Qbit Technologies MMC.<br> Bütün hüquqlar qorunur.</small>
             </div>
 
             <!-- Mobil Uygulama -->
-            <div class="col-12 col-md-6 col-lg-2">
+            <div class="col-12 col-md-6 col-lg-2 ">
                 <h6 class="fw-bold">Tətbiqi yüklə</h6>
-                <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Apple_logo_black.svg" width="16" class="me-2"> App Store <br><small>’dan yükləyin</small></a><br>
-                <a href="#" class="mt-2 d-inline-block"><img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" width="16" class="me-2"> Google Play <br><small>’də əldə edin</small></a>
+                <div class="border border-secondary rounded-3 p-1 text-center mb-2">
+                    <i class="bi-apple text-dark"></i><a class="text-secondary" href="#"> App Store <br><small>’dan yükləyin</small></a><br>
+                </div>
+                <div class="border border-secondary rounded-3 p-1 text-center">
+                <i class="bi-google-play text-dark"></i> <a class="text-secondary" href="#" class="mt-2 d-inline-block"> Google Play <br><small>’də əldə edin</small></a>
+                </div>
             </div>
 
             <!-- Menü -->
