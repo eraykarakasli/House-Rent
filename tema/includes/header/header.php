@@ -48,17 +48,20 @@
                         <button type="button" data-bs-toggle="dropdown" class="btn btn-outline border rounded-5 d-flex align-items-center gap-2 dropdown-toggle">
                             <i class="bi bi-list"></i> <i class="bi bi-person"></i>
                         </button>
-                        <!-- Daxil ol -->
-                        <div class="dropdown-menu p-2 text-center shadow rounded-3" style="min-width: 90px;">
-                            <a href="/pages/auth/register.php" class="text-dark text-decoration-none d-block p-1" style="font-size: 14px;">
+                        <div class="dropdown-menu p-1 py-2 text-center shadow rounded-3" style="min-width: 90px;">
+                            <!-- Daxil ol -->
+                            <a href="/pages/auth/register.php" class="text-dark text-decoration-none d-block  dropdown-item" style="font-size: 14px;">
                                 Daxil Ol
                             </a>
+                            <div class="border-bottom"></div>
+                            <!-- Kabinetim -->
+                            <a href="/pages/profile/profile.php" class="text-dark text-decoration-none d-block  dropdown-item" style="font-size: 14px;">
+                                Kabinetim
+                            </a>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </nav>
     <div style="margin-top: 120px;"></div>
-    
