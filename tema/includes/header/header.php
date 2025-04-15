@@ -17,7 +17,7 @@
     <nav class="navbar navbar-expand-lg bg-white border-bottom fixed-top" style="min-height: 100px;">
         <div class="container">
             <!-- Sol logo -->
-            <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="../../index.php">
                 <img src="../../../assets/icon.png" alt="Logo" width="32">
                 <span class="fw-bold text-primary">ev10</span>
             </a>
@@ -50,7 +50,7 @@
                         </button>
                         <!-- Daxil ol -->
                         <div class="dropdown-menu p-2 text-center shadow rounded-3" style="min-width: 90px;">
-                            <a href="#" class="text-dark text-decoration-none d-block p-1" style="font-size: 14px;">
+                            <a href="/pages/auth/register.php" class="text-dark text-decoration-none d-block p-1" style="font-size: 14px;">
                                 Daxil Ol
                             </a>
                         </div>
@@ -60,4 +60,5 @@
             </div>
         </div>
     </nav>
-    <?php include __DIR__ . '/searchbar/searchbar.php'; ?>
+    <div style="margin-top: 120px;"></div>
+    
