@@ -29,12 +29,12 @@
             <div class="collapse navbar-collapse justify-content-between" id="navbarContent">
                 <!-- Orta Menü -->
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-3">
-                    <li class="nav-item"><a class="nav-link" href="#">Ev alqı satqısı</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Kirayə</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Günlük</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Otaq yoldaşı</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Yaşayış Kompleksləri</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">İpoteka</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../pages/ads/ads.php">Ev alqı satqısı</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../pages/ads/ads.php">Kirayə</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../pages/ads/ads.php">Günlük</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../pages/ads/ads.php">Otaq yoldaşı</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../pages/ads/ads.php">Yaşayış Kompleksləri</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../pages/ads/ads.php">İpoteka</a></li>
                 </ul>
                 <!-- Sağ Butonlar -->
                 <div class="d-flex align-items-center gap-3">
