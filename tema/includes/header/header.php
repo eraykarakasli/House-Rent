@@ -17,9 +17,9 @@
     <nav class="navbar navbar-expand-lg bg-white border-bottom fixed-top" style="min-height: 100px;">
         <div class="container">
             <!-- Sol logo -->
-            <a class="navbar-brand d-flex align-items-center gap-2" href="../../index.php">
-                <img src="../../../assets/icon.png" alt="Logo" width="32">
-                <span class="fw-bold text-primary">ev10</span>
+            <a class="navbar-brand d-flex align-items-center" href="../../index.php">
+                <img src="../../../assets/icon.png" alt="Logo" width="48">
+                <span class="fw-semibold fs-2" style="color: #0d98ba;">ev10</span>
             </a>
             <!-- Mobil menü butonu -->
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">

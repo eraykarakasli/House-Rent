@@ -1,5 +1,5 @@
  <!-- Sol Menü -->
- <div class="col-md-4 col-lg-3">
+ <div class="col-md-4 col-lg-3 mb-3">
      <div class="bg-white shadow-sm rounded-4 p-4 h-100">
 
          <!-- Kullanıcı bilgisi -->
@@ -11,7 +11,7 @@
          <!-- Menü -->
          <ul class="nav flex-column gap-2">
              <li class="nav-item">
-                 <a class="nav-link d-flex justify-content-between align-items-center active text-dark bg-light rounded px-3 py-2" href="#">
+                 <a class="nav-link d-flex justify-content-between align-items-center active text-dark  bg-light rounded px-3 py-2" href="#">
                      <div><i class="bi bi-person me-2"></i> Profilim</div>
                      <i class="bi bi-chevron-right"></i>
                  </a>

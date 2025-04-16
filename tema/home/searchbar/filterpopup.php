@@ -1,13 +1,13 @@
 <!-- Modal -->
 <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content rounded-4 shadow border-0">
+        <div class="modal-content rounded-4 shadow border-0 ">
             <div class="modal-header border-bottom mx-4 ">
                 <h4 class="modal-title fw-bold text-center w-100" id="filterModalLabel">Ətraflı axtarış</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <div class="modal-body " style="max-height: 70vh; overflow-y: auto;">
+            <div class="modal-body mx-5" style="max-height: 70vh; overflow-y: auto;">
                 <!-- Elan növü -->
                 <p class="fw-bold">Elan növü</p>
                 <div class="d-flex flex-wrap gap-3 mb-4">
