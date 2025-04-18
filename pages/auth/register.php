@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="az">
 
 <head>
     <meta charset="UTF-8">
@@ -21,6 +21,7 @@
             <span class="fw-bold text-primary">ev10</span>
         </a>
     </nav>
+
     <div class="d-flex align-items-center">
         <div class="container">
             <div class="row justify-content-center">
@@ -28,7 +29,7 @@
                     <div class="card shadow border-0 rounded-4 p-4">
                         <div class="card-body">
 
-                            <!-- Başlık -->
+                            <!-- Başlıq -->
                             <h2 class="text-center fw-bold mb-4">Qeydiyyat</h2>
 
                             <!-- Form -->
@@ -42,60 +43,48 @@
                                         <input type="text" class="form-control" placeholder="Soyad">
                                     </div>
                                 </div>
-                                <!-- E-posta -->
+                                <!-- E-poçt -->
                                 <div class="mb-3">
-                                    <input type="email" class="form-control" placeholder="E-posta adresi">
+                                    <input type="email" class="form-control" placeholder="E-poçt ünvanı">
                                 </div>
-                                <!-- Telefon Numarası -->
+                                <!-- Telefon nömrəsi -->
                                 <div class="mb-3 input-group">
                                     <span class="input-group-text"><i class="bi bi-telephone"></i></span>
                                     <input type="tel" class="form-control" placeholder="05xx xxx xx xx" maxlength="13">
                                 </div>
-                                <!-- Şifre -->
+                                <!-- Parol -->
                                 <div class="mb-3 input-group">
-                                    <input type="password" class="form-control" placeholder="Şifre">
-                                    <span class="input-group-text"><i class="bi bi-eye-slash"></i></span>
+                                    <input type="password" class="form-control" id="passwordInput" placeholder="Parol">
+                                    <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
+                                        <i class="bi bi-eye-slash" id="toggleIcon"></i>
+                                    </span>
                                 </div>
 
-                                <!-- Sözleşme -->
+                                <!-- Şərtlər -->
                                 <div class="form-check mb-3">
                                     <input class="form-check-input" type="checkbox" id="terms">
                                     <label class="form-check-label small" for="terms">
-                                        <a href="#" class="text-decoration-none text-primary">Kullanım koşulları</a>nı kabul ediyorum.
+                                        <a href="#" class="text-decoration-none text-primary">İstifadə şərtləri</a> ilə razıyam.
                                     </label>
                                 </div>
 
-                                <!-- Kayıt butonu -->
+                                <!-- Qeydiyyat düyməsi -->
                                 <div class="d-grid mb-3">
-                                    <button class="btn btn-primary">Hesap Oluştur</button>
-                                </div>
-
-                                <!-- veya -->
-                                <div class="text-center mb-3 text-muted small">
-                                    veya
-                                </div>
-
-                                <!-- Sosyal ile kayıt -->
-                                <div class="d-grid gap-2 mb-3">
-                                    <button type="button" class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-2">
-                                        <i class="bi bi-google"></i> Google ile devam et
-                                    </button>
-                                    <button type="button" class="btn btn-outline-dark d-flex align-items-center justify-content-center gap-2">
-                                        <i class="bi bi-apple"></i> Apple ile devam et
-                                    </button>
+                                    <button class="btn btn-primary">Hesab yarat</button>
                                 </div>
 
                                 <!-- Giriş -->
                                 <div class="text-center small">
-                                    Zaten bir hesabın var mı? <a href="login.php" class="text-decoration-none text-primary fw-semibold">Giriş yap</a>
+                                    Artıq hesabınız var? <a href="login.php" class="text-decoration-none text-primary fw-semibold">Daxil olun</a>
                                 </div>
                             </form>
 
                         </div>
                     </div>
-                    <!-- Alt bilgi -->
+
+                    <!-- Alt məlumat -->
                     <p class="text-center mt-4 small text-muted">
-                        Bu site reCAPTCHA ile korunmaktadır. <a href="#" class="text-decoration-none">Gizlilik Politikası</a> ve <a href="#" class="text-decoration-none">Kullanım Şartları</a> geçerlidir.
+                        Bu sayt reCAPTCHA ilə qorunur. <a href="#" class="text-decoration-none">Məxfilik Siyasəti</a> və <a href="#" class="text-decoration-none">İstifadə Şərtləri</a> keçərlidir.
                     </p>
                 </div>
             </div>
@@ -104,6 +93,20 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const togglePassword = document.getElementById("togglePassword");
+        const passwordInput = document.getElementById("passwordInput");
+        const toggleIcon = document.getElementById("toggleIcon");
+
+        togglePassword.addEventListener("click", function () {
+            const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+            passwordInput.setAttribute("type", type);
+
+            // İkonu dəyiş
+            toggleIcon.classList.toggle("bi-eye");
+            toggleIcon.classList.toggle("bi-eye-slash");
+        });
+    </script>
 </body>
 
 </html>

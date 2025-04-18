@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="az">
 
 <head>
   <meta charset="UTF-8">
@@ -29,63 +29,50 @@
           <div class="card shadow border-0 rounded-4 p-4">
             <div class="card-body">
 
-              <!-- Başlık -->
-              <h2 class="text-center fw-bold mb-4">Giriş Yap</h2>
+              <!-- Başlıq -->
+              <h2 class="text-center fw-bold mb-4">Daxil Ol</h2>
 
               <!-- Form -->
               <form>
-                <!-- E-posta -->
+                <!-- E-poçt -->
                 <div class="mb-3">
-                  <input type="email" class="form-control" placeholder="E-posta adresi">
+                  <input type="email" class="form-control" placeholder="E-poçt ünvanı">
                 </div>
 
-                <!-- Şifre -->
+                <!-- Parol -->
                 <div class="mb-3 input-group">
-                  <input type="password" class="form-control" placeholder="Şifre">
-                  <span class="input-group-text"><i class="bi bi-eye-slash"></i></span>
+                  <input type="password" class="form-control" id="passwordInput" placeholder="Parol">
+                  <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
+                    <i class="bi bi-eye-slash" id="toggleIcon"></i>
+                  </span>
                 </div>
 
-                <!-- Beni hatırla ve şifre unut -->
+                <!-- Məni xatırla və şifrəni unut -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="remember">
-                    <label class="form-check-label small" for="remember">Beni hatırla</label>
+                    <label class="form-check-label small" for="remember">Məni xatırla</label>
                   </div>
-                  <a href="#" class="small text-decoration-none text-primary">Şifremi unuttum</a>
+                  <a href="#" class="small text-decoration-none text-primary">Parolunuzu unutmusunuz?</a>
                 </div>
 
-                <!-- Giriş butonu -->
+                <!-- Giriş düyməsi -->
                 <div class="d-grid mb-3">
-                  <button class="btn btn-primary">Giriş Yap</button>
+                  <button class="btn btn-primary">Daxil ol</button>
                 </div>
 
-                <!-- veya -->
-                <div class="text-center mb-3 text-muted small">
-                  veya
-                </div>
-
-                <!-- Sosyal ile giriş -->
-                <div class="d-grid gap-2 mb-3">
-                  <button type="button" class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-2">
-                    <i class="bi bi-google"></i> Google ile giriş yap
-                  </button>
-                  <button type="button" class="btn btn-outline-dark d-flex align-items-center justify-content-center gap-2">
-                    <i class="bi bi-apple"></i> Apple ile giriş yap
-                  </button>
-                </div>
-
-                <!-- Kayıt yönlendirmesi -->
+                <!-- Qeydiyyat yönləndirməsi -->
                 <div class="text-center small">
-                  Henüz hesabınız yok mu? <a href="register.php" class="text-decoration-none text-primary fw-semibold">Kayıt ol</a>
+                  Hələ hesabınız yoxdur? <a href="register.php" class="text-decoration-none text-primary fw-semibold">Qeydiyyatdan keçin</a>
                 </div>
               </form>
 
             </div>
           </div>
 
-          <!-- Alt bilgi -->
+          <!-- Alt məlumat -->
           <p class="text-center mt-4 small text-muted">
-            Bu site reCAPTCHA ile korunmaktadır. <a href="#" class="text-decoration-none">Gizlilik Politikası</a> ve <a href="#" class="text-decoration-none">Kullanım Şartları</a> geçerlidir.
+            Bu sayt reCAPTCHA ilə qorunur. <a href="#" class="text-decoration-none">Məxfilik Siyasəti</a> və <a href="#" class="text-decoration-none">İstifadə Şərtləri</a> keçərlidir.
           </p>
         </div>
       </div>
@@ -95,5 +82,21 @@
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
+<!-- Şifrəni göstər/gizlət scripti -->
+<script>
+  const togglePassword = document.getElementById("togglePassword");
+  const passwordInput = document.getElementById("passwordInput");
+  const toggleIcon = document.getElementById("toggleIcon");
+
+  togglePassword.addEventListener("click", function () {
+    const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+    passwordInput.setAttribute("type", type);
+
+    // İkonu dəyiş
+    toggleIcon.classList.toggle("bi-eye");
+    toggleIcon.classList.toggle("bi-eye-slash");
+  });
+</script>
 
 </html>
