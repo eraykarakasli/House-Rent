@@ -25,11 +25,8 @@
             <div class="col-6 col-lg-2">
                 <h6 class="fw-bold">Menyu</h6>
                 <ul class="list-unstyled">
-                    <li><a href="#" class="text-decoration-none text-muted">Haqqımızda</a></li>
-                    <li><a href="#" class="text-decoration-none text-muted">Agentliklər</a></li>
-                    <li><a href="#" class="text-decoration-none text-muted">Agentliklər üçün həllər</a></li>
-                    <li><a href="#" class="text-decoration-none text-muted">Blog</a></li>
-                    <li><a href="#" class="text-decoration-none text-muted">Əlaqə</a></li>
+                    <li><a href="/pages/info/aboutus.php" class="text-decoration-none text-muted">Haqqımızda</a></li>
+                    <li><a href="/pages/info/blog.php" class="text-decoration-none text-muted">Blog</a></li>
                 </ul>
             </div>
             <!-- Dəstək -->

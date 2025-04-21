@@ -1,40 +1,65 @@
 <?php
 include "../../tema/includes/header/header.php";
 ?>
-<div class="container my-5">
-    <div class="row g-4">
+<div class="container">
+    <div class="row gap-5 pb-5">
         <!-- Başlık + Galeri -->
         <div class="col-12">
             <h4 class="fw-bold mb-4">Satılır, obyekt 160m², 8 Noyabr m.</h4>
 
             <!-- Galeri -->
             <div class="d-flex gap-2 mb-4" style="height: 400px;">
-                <!-- Sol: Büyük görsel -->
                 <div class="w-50">
-                    <img src="../../assets/evresim6.webp" class="img-fluid rounded w-100 h-100 object-fit-cover" alt="Ana Görsel">
+                    <img src="../../assets/evresim6.webp" class="cursor-pointer img-fluid rounded w-100 h-100 object-fit-cover gallery-img" data-bs-toggle="modal" data-bs-target="#galleryModal" data-index="0" alt="Ana Görsel" style="cursor: pointer;">
                 </div>
-
-                <!-- Sağ: 4 küçük görsel (2x2) -->
                 <div class="w-50 d-flex flex-wrap gap-2">
                     <div class="position-relative" style="width: calc(50% - 4px); height: 49%;">
-                        <img src="../../assets/evresim7.webp" class="img-fluid rounded w-100 h-100 object-fit-cover" alt="Görsel 2">
+                        <img src="../../assets/evresim7.webp" class="img-fluid rounded w-100 h-100 object-fit-cover gallery-img" data-bs-toggle="modal" data-bs-target="#galleryModal" data-index="1" alt="Görsel 2" style="cursor: pointer;">
                     </div>
                     <div class="position-relative" style="width: calc(50% - 4px); height: 49%;">
-                        <img src="../../assets/evresim8.webp" class="img-fluid rounded w-100 h-100 object-fit-cover" alt="Görsel 3">
+                        <img src="../../assets/evresim8.webp" class="img-fluid rounded w-100 h-100 object-fit-cover gallery-img" data-bs-toggle="modal" data-bs-target="#galleryModal" data-index="2" alt="Görsel 3" style="cursor: pointer;">
                     </div>
                     <div class="position-relative" style="width: calc(50% - 4px); height: 49%;">
-                        <img src="../../assets/evresim9.webp" class="img-fluid rounded w-100 h-100 object-fit-cover" alt="Görsel 4">
+                        <img src="../../assets/evresim9.webp" class="img-fluid rounded w-100 h-100 object-fit-cover gallery-img" data-bs-toggle="modal" data-bs-target="#galleryModal" data-index="3" alt="Görsel 4" style="cursor: pointer;">
                     </div>
                     <div class="position-relative" style="width: calc(50% - 4px); height: 49%;">
-                        <img src="../../assets/evresim10.webp" class="img-fluid rounded w-100 h-100 object-fit-cover" alt="Görsel 5">
-                        <button class="btn btn-light position-absolute bottom-0 end-0 m-2 rounded-3 border"
-                            data-bs-toggle="modal" data-bs-target="#galleryModal">
-                            Hamısına bax
-                        </button>
+                        <img src="../../assets/evresim10.webp" class="img-fluid rounded w-100 h-100 object-fit-cover gallery-img" data-bs-toggle="modal" data-bs-target="#galleryModal" data-index="4" alt="Görsel 5" style="cursor: pointer;">
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Carousel Modal -->
+        <div class="modal fade" id="galleryModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen m-0 w-100">
+                <div class="modal-content bg-black border-0 w-100">
+                    <div class="modal-header border-0 p-2">
+                        <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-0 text-center overflow-hidden">
+                        <div id="modalCarousel" class="carousel slide w-100 h-100" data-bs-ride="carousel">
+                            <div class="carousel-inner w-100 h-100">
+                                <div class="carousel-item active h-100">
+                                    <img src="../../assets/evresim6.webp" class="img-fluid h-100 object-fit-contain mx-auto d-block" alt="...">
+                                </div>
+                                <div class="carousel-item h-100">
+                                    <img src="../../assets/evresim7.webp" class="img-fluid h-100 object-fit-contain mx-auto d-block" alt="...">
+                                </div>
+                                <!-- Diğer görseller -->
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#modalCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#modalCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <!-- Sol Açıklama Alanı -->
             <div class="col-lg-8">
@@ -133,6 +158,24 @@ include "../../tema/includes/header/header.php";
     </div>
 
 </div>
+<!-- carousel -->
+<script>
+    const galleryImages = document.querySelectorAll('.gallery-img');
+    const modalCarousel = document.querySelector('#modalCarousel');
+
+    // Otomatik geçişi devre dışı bırak
+    modalCarousel.setAttribute('data-bs-ride', 'false');
+    modalCarousel.setAttribute('data-bs-interval', 'false');
+
+    galleryImages.forEach(img => {
+        img.addEventListener('click', () => {
+            const index = parseInt(img.getAttribute('data-index'));
+            const carousel = bootstrap.Carousel.getInstance(modalCarousel) || new bootstrap.Carousel(modalCarousel);
+            carousel.to(index);
+        });
+    });
+</script>
+
 </div>
 <?php include "../../tema/ads/adsdetail/adsdetailmodal.php"; ?>
 <?php include "../../tema/includes/footer/footer.php"; ?>
