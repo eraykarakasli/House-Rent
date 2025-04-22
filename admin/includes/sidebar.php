@@ -1,45 +1,50 @@
-<div class="bg-white border-end vh-100 p-3" style="width: 250px;">
-  <div class="d-flex align-items-center mb-4">
-    <i class="bi bi-gem text-primary fs-4 me-2"></i>
-    <h5 class="mb-0 fw-bold">Mantis</h5>
+<div class="d-flex flex-column justify-between bg-dark text-white p-3" style="min-height: 100vh; min-width: 250px;">
+  <div>
+    <h4 class="mb-4">Ev Sistemi</h4>
+    <ul class="nav flex-column">
+      <li class="nav-item mb-2">
+        <a href="/admin/dashboard.php" class="nav-link text-white">
+          <i class="bi bi-house-door"></i> Ana Səhifə
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a href="/admin/admin_settings.php" class="nav-link text-white">
+          <i class="bi bi-gear"></i> Sayt Ayarları
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a href="/admin/categories.php" class="nav-link text-white">
+          <i class="bi bi-tags"></i> Kateqoriyalar
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a href="/admin/static_pages.php" class="nav-link text-white">
+          <i class="bi bi-file-earmark-text"></i> Statik Səhifələr
+        </a>
+      </li>
+
+      <li class="nav-item mb-2">
+        <a href="/admin/blogs.php" class="nav-link text-white">
+          <i class="bi bi-journal-text"></i> Bloglar
+        </a>
+      </li>
+
+    </ul>
   </div>
 
-  <ul class="nav flex-column">
-    <li class="nav-item">
-      <a class="nav-link active text-primary fw-semibold" href="#"><i class="bi bi-grid me-2"></i> Dashboard</a>
-    </li>
-
-    <li class="nav-item mt-3">
-      <span class="text-muted small text-uppercase">UI Components</span>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link text-dark" href="#"><i class="bi bi-fonts me-2"></i> Typography</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link text-dark" href="#"><i class="bi bi-palette me-2"></i> Color</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link text-dark" href="#"><i class="bi bi-image me-2"></i> Icons</a>
-    </li>
-
-    <li class="nav-item mt-3">
-      <span class="text-muted small text-uppercase">Pages</span>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link text-dark" href="#"><i class="bi bi-box-arrow-in-right me-2"></i> Login</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link text-dark" href="#"><i class="bi bi-pencil-square me-2"></i> Register</a>
-    </li>
-
-    <li class="nav-item mt-3">
-      <span class="text-muted small text-uppercase">Other</span>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link text-dark" href="#"><i class="bi bi-list-nested ke-2"></i> Menu levels</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link text-dark" href="#"><i class="bi bi-file-earmark-text me-2"></i> Sample page</a>
-    </li>
-  </ul>
+  <div class="mt-auto">
+    <hr class="text-secondary">
+    <ul class="nav flex-column">
+      <li class="nav-item mb-2">
+        <a href="/admin/password_update.php" class="nav-link text-white">
+          <i class="bi bi-person-circle"></i> Profilim
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="includes/logout.php" class="nav-link text-white">
+          <i class="bi bi-box-arrow-right"></i> Çıxış
+        </a>
+      </li>
+    </ul>
+  </div>
 </div>

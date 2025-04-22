@@ -1,33 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="az">
 
 <head>
     <meta charset="UTF-8">
+    <title>Admin Panel | Ev Sistemi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ev10 Dashboard</title>
-
+    <link rel="stylesheet" href="../assets/css/style.css">
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Opsiyonel: Google Fonts (isteğe bağlı) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Summernote CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.css" rel="stylesheet">
 
-    <!-- Custom CSS (varsa) -->
-    <link rel="stylesheet" href="css/style.css">
+    <!-- jQuery (Summernote için gerekli) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Summernote JS -->
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js"></script>
+    <!-- Chart JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
 </head>
 
-<body>
-
-    <nav class="navbar navbar-light bg-white border-bottom px-4 py-3 border d-flex justify-content-end">
-        <div class="d-flex  gap-3 align-items-center ">
-            <i class="bi bi-envelope me-3"></i>
-            <div class="d-flex align-items-center">
-                <img src="https://i.pravatar.cc/30" class="rounded-circle me-2" alt="avatar">
-                <span class="fw-semibold">Stebin Ben</span>
-            </div>
-        </div>
-        </div>
-    </nav>
+<body class="bg-light">
+    <div class="d-flex">
+        
