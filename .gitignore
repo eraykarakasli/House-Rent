@@ -1,0 +1,15 @@
+# Admin kurulum dosyası (gizli kalsın)
+admin/includes/admin_account.php
+
+# Yüklenen dosyaların olduğu klasör (kullanıcı görselleri vs.)
+admin/assets/uploads/
+
+assets/
+# Diğer yaygın dışlama örnekleri (isteğe bağlı)
+*.log
+*.env
+/vendor/
+/node_modules/
+/.env
+.idea/
+.DS_Store
