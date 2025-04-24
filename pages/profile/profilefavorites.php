@@ -1,7 +1,5 @@
 <?php
 include "../../tema/includes/session_check.php";
-include "../../tema/includes/config.php";
-
 include "../../tema/includes/header/header.php";
 ?>
 <div class="container min-vh-100 my-5">
@@ -11,7 +9,7 @@ include "../../tema/includes/header/header.php";
         ?>
         
         <?php
-        include "../../tema/profile/content/profileform.php";
+        include "../../tema/profile/content/favorites.php";
         ?>
         
     </div>
