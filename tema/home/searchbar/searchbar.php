@@ -58,7 +58,8 @@
 
 
 
-    <?php include "filterpopup.php"; ?>
+    
+
 
     <!-- Arama Butonu -->
     <button class="btn btn-info text-white rounded-circle d-flex justify-content-center align-items-center" style="width: 40px; height: 40px;">
@@ -66,3 +67,4 @@
     </button>
   </div>
 </div>
+<?php include "mobilefilter.php"; ?>
