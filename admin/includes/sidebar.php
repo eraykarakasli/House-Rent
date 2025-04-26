@@ -28,6 +28,28 @@
           <i class="bi bi-journal-text"></i> Bloglar
         </a>
       </li>
+      <li class="nav-item mb-2">
+        <a href="/admin/listings.php" class="nav-link text-white">
+          <i class="bi bi-megaphone"></i> Elan Prosesi
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a href="/admin/approved_listings.php" class="nav-link text-white">
+          <i class="bi bi-patch-check"></i> Təsdiqlənmiş Elanlar
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a href="/admin/messages.php" class="nav-link text-white">
+          <i class="bi bi-envelope-paper"></i> Mesajlar
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a href="/admin/complaints.php" class="nav-link text-white">
+          <i class="bi bi-exclamation-octagon"></i> Şikayətlər
+        </a>
+      </li>
+
+
 
     </ul>
   </div>

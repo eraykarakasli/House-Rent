@@ -11,12 +11,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
 
-    // ✅ Formdan gelen verileri güvenli bir şekilde al ve işle
+    // ✅ Formdan gelen verileri güvenli bir şekilde al
     $title = trim($_POST['title'] ?? '');
     $category = $_POST['category'] ?? '';
     $area = (int) ($_POST['area'] ?? 0);
     $land_area = isset($_POST['land_area']) ? (int) $_POST['land_area'] : null;
-    $certificate = $_POST['certificate'] ?? '';
+    $certificate = isset($_POST['certificate']) ? (int) $_POST['certificate'] : 0; // 🔥 BOOLEAN olarak al
+    $mortgage = isset($_POST['mortgage']) ? (int) $_POST['mortgage'] : 0; // 🔥 BOOLEAN olarak al
+    $renovated = isset($_POST['renovated']) ? (int) $_POST['renovated'] : 0; // 🔥 BOOLEAN olarak al
     $floor = $_POST['floor'] ?? '';
     $room_count = (int) ($_POST['room_count'] ?? 0);
     $price = (int) ($_POST['price'] ?? 0);
@@ -25,7 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $latitude = $_POST['latitude'] ?? '';
     $longitude = $_POST['longitude'] ?? '';
     $features = isset($_POST['features']) ? json_encode($_POST['features'], JSON_UNESCAPED_UNICODE) : json_encode([], JSON_UNESCAPED_UNICODE);
-
 
     $status = 'pending'; // Admin onayı bekleniyor
 
@@ -49,10 +50,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     try {
-        // ✅ Veritabanına kayıt
-        $stmt = $baglanti->prepare("INSERT INTO ads (user_id, title, category, area, land_area, certificate, floor, room_count, price, description, address, latitude, longitude, features, images, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        // ✅ Veritabanına kayıt — DİKKAT: Şimdi mortgage ve renovated da INSERT ediliyor 🔥
+        $stmt = $baglanti->prepare("INSERT INTO ads (user_id, title, category, area, land_area, certificate, mortgage, renovated, floor, room_count, price, description, address, latitude, longitude, features, images, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute([
             $user_id, $title, $category, $area, $land_area, $certificate,
+            $mortgage, $renovated, // 🔥 BURADA EKLENDİ
             $floor, $room_count, $price, $description, $address,
             $latitude, $longitude, $features, json_encode($image_paths), $status
         ]);

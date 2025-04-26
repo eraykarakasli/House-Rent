@@ -26,21 +26,10 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                     <i class="bi bi-chevron-right"></i>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link d-flex justify-content-between align-items-center text-dark rounded px-3 py-2" href="#">
-                    <div><i class="bi bi-calendar-week me-2"></i> Səyahətlərim</div>
-                    <i class="bi bi-chevron-right"></i>
-                </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link d-flex justify-content-between align-items-center text-dark rounded px-3 py-2" href="profilefavorites.php">
                     <div><i class="bi bi-heart me-2"></i> Seçilmişlər</div>
-                    <i class="bi bi-chevron-right"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link d-flex justify-content-between align-items-center text-dark rounded px-3 py-2" href="#">
-                    <div><i class="bi bi-bookmark me-2"></i> Axtarışlarım</div>
                     <i class="bi bi-chevron-right"></i>
                 </a>
             </li>
@@ -51,38 +40,19 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link d-flex justify-content-between align-items-center text-dark rounded px-3 py-2" href="#">
-                    <div>
-                        <i class="bi bi-bar-chart me-2"></i> Statistika
-                        <span class="badge bg-info text-white ms-2">Yeni</span>
-                    </div>
-                    <i class="bi bi-chevron-right"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link d-flex justify-content-between align-items-center text-dark rounded px-3 py-2" href="#">
+                <a class="nav-link d-flex justify-content-between align-items-center text-dark rounded px-3 py-2" href="profile_contact.php">
                     <div><i class="bi bi-chat-dots me-2"></i> Çat</div>
                     <i class="bi bi-chevron-right"></i>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link d-flex justify-content-between align-items-center text-dark rounded px-3 py-2" href="#">
-                    <div><i class="bi bi-wallet2 me-2"></i> Balansım</div>
+                <a class="nav-link d-flex justify-content-between align-items-center text-dark rounded px-3 py-2" href="profile_messages.php">
+                    <div><i class="bi bi-envelope-open"></i> Mesajlarım</div>
                     <i class="bi bi-chevron-right"></i>
                 </a>
+
             </li>
-            <li class="nav-item">
-                <a class="nav-link d-flex justify-content-between align-items-center text-dark rounded px-3 py-2" href="#">
-                    <div><i class="bi bi-arrow-left-right me-2"></i> Ödəniş tarixçəsi</div>
-                    <i class="bi bi-chevron-right"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link d-flex justify-content-between align-items-center text-dark rounded px-3 py-2" href="#">
-                    <div><i class="bi bi-buildings me-2"></i> Şirkət yarat</div>
-                    <i class="bi bi-chevron-right"></i>
-                </a>
-            </li>
+
         </ul>
 
         <!-- Çıkış -->

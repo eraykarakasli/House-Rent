@@ -7,6 +7,7 @@
     <div class="d-flex justify-content-between align-items-center shadow-sm border rounded-4 p-4 mb-4 flex-wrap gap-3">
         <h4 class="fw-semibold mb-0">Elan Yarat</h4>
     </div>
+
     <div class="step-wrapper shadow-sm border rounded-4 p-4">
         <form id="adFormStep4" method="post" action="/tema/includes/post_ad_process.php" enctype="multipart/form-data">
             <!-- Step 1: Əsas Məlumatlar -->
@@ -17,6 +18,7 @@
                     <label class="form-label">Başlıq</label>
                     <input type="text" class="form-control rounded-3" name="title" placeholder="Məsələn: 3 otaqlı təmirli mənzil" required>
                 </div>
+
                 <div class="mb-3">
                     <label class="form-label">Kateqoriya</label>
                     <select class="form-select rounded-3" name="category" required>
@@ -26,31 +28,58 @@
                         <option value="ofis">Ofis</option>
                     </select>
                 </div>
+
                 <div class="mb-3">
                     <label class="form-label">Sahə (m²)</label>
                     <input type="number" class="form-control rounded-3" name="area" placeholder="Məsələn: 80" required>
                 </div>
+
                 <div class="mb-3">
                     <label class="form-label">Torpağın sahəsi (m²)</label>
                     <input type="number" class="form-control rounded-3" name="land_area" placeholder="Əlavə edin (istəyə bağlı)">
                 </div>
+
                 <div class="mb-3">
                     <label class="form-label d-block">Çıxarış</label>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="certificate" id="certYes" value="var" required>
+                        <input class="form-check-input" type="radio" name="certificate" id="certYes" value="1" required>
                         <label class="form-check-label" for="certYes">Var</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="certificate" id="certNo" value="yox" required>
+                        <input class="form-check-input" type="radio" name="certificate" id="certNo" value="0" required>
                         <label class="form-check-label" for="certNo">Yox</label>
                     </div>
                 </div>
+
+                <div class="mb-3">
+                    <label class="form-label d-block">İpoteka</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="mortgage" id="mortgageYes" value="1" required>
+                        <label class="form-check-label" for="mortgageYes">Var</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="mortgage" id="mortgageNo" value="0" required>
+                        <label class="form-check-label" for="mortgageNo">Yox</label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label d-block">Təmirli</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="renovated" id="renovatedYes" value="1" required>
+                        <label class="form-check-label" for="renovatedYes">Bəli</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="renovated" id="renovatedNo" value="0" required>
+                        <label class="form-check-label" for="renovatedNo">Xeyr</label>
+                    </div>
+                </div>
+
                 <div class="text-end">
                     <button type="button" class="btn btn-primary rounded-pill px-4" onclick="goToStep(2)">
                         Növbəti <i class="bi bi-chevron-right ms-1"></i>
                     </button>
                 </div>
-
             </div>
 
             <!-- Step 2: Əmlak Məlumatları -->
@@ -61,6 +90,7 @@
                     <label class="form-label">Mərtəbə</label>
                     <input type="text" class="form-control rounded-3" name="floor" placeholder="Məsələn: 3/9" required>
                 </div>
+
                 <div class="mb-3">
                     <label class="form-label">Otaq sayı</label>
                     <select class="form-select rounded-3" name="room_count" required>
@@ -70,14 +100,17 @@
                         <?php endfor; ?>
                     </select>
                 </div>
+
                 <div class="mb-3">
                     <label class="form-label">Qiymət (AZN)</label>
                     <input type="number" class="form-control rounded-3" name="price" placeholder="Məsələn: 85000" required>
                 </div>
+
                 <div class="mb-4">
                     <label class="form-label">Elan haqqında məlumat</label>
                     <textarea class="form-control rounded-3" name="description" rows="4" placeholder="Əmlak haqqında ətraflı məlumat daxil edin..." required></textarea>
                 </div>
+
                 <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-outline-secondary rounded-pill px-4" onclick="goToStep(1)">
                         <i class="bi bi-chevron-left me-1"></i> Əvvəlki
@@ -86,7 +119,6 @@
                         Növbəti <i class="bi bi-chevron-right ms-1"></i>
                     </button>
                 </div>
-
             </div>
 
             <!-- Step 3: Xüsusiyyətlər, Konum, Adres -->
@@ -108,8 +140,8 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Ünvanı xəritədə tap (küçə, bina, rayon)</label>
-                    <input type="text" class="form-control" name="address" placeholder="Ünvan daxil edin..." required>
+                    <label class="form-label">Ünvan</label>
+                    <input type="text" class="form-control rounded-3" name="address" placeholder="Ünvanı daxil edin..." required>
                 </div>
 
                 <div class="mb-4">
@@ -127,21 +159,18 @@
                         Növbəti <i class="bi bi-chevron-right ms-1"></i>
                     </button>
                 </div>
-
             </div>
 
             <!-- Step 4: Şəkil Yükləmə -->
             <div id="step4" class="step">
                 <h4 class="fw-semibold mb-4">4. Şəkil Yükləmə</h4>
 
-
                 <div class="mb-3">
-                    <label for="images" class="form-label">Şəkil seçin</label>
+                    <label for="images" class="form-label">Şəkilləri seçin</label>
                     <input class="form-control" type="file" id="images" name="images[]" accept="image/*" multiple required>
-                    <small class="text-muted">Yalnız şəkillər. Maksimum 20 şəkil yükləyə bilərsiniz.</small>
+                    <small class="text-muted">Yalnız şəkil faylları. Maksimum 20 şəkil.</small>
                 </div>
 
-                <!-- Önizleme Alanı -->
                 <div id="preview" class="row g-2 mb-4"></div>
 
                 <div class="d-flex justify-content-between">
@@ -154,10 +183,10 @@
                 </div>
             </div>
         </form>
-
     </div>
 </div>
 
+<!-- Step kontrol ve Leaflet harita scriptleri -->
 <script>
     let map;
     let marker;
@@ -169,10 +198,7 @@
         }).addTo(map);
 
         map.on('click', function(e) {
-            const {
-                lat,
-                lng
-            } = e.latlng;
+            const { lat, lng } = e.latlng;
             if (!marker) {
                 marker = L.marker([lat, lng]).addTo(map);
             } else {
@@ -188,7 +214,6 @@
         preview.innerHTML = "";
 
         const files = this.files;
-
         if (files.length > 20) {
             alert("Maksimum 20 şəkil yükləyə bilərsiniz!");
             this.value = "";
@@ -197,7 +222,6 @@
 
         Array.from(files).forEach(file => {
             if (!file.type.startsWith("image/")) return;
-
             const reader = new FileReader();
             reader.onload = function(e) {
                 const col = document.createElement("div");
@@ -229,11 +253,6 @@
 </script>
 
 <style>
-    .step {
-        display: none;
-    }
-
-    .step.active {
-        display: block;
-    }
+    .step { display: none; }
+    .step.active { display: block; }
 </style>

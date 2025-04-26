@@ -1,29 +1,64 @@
-<!-- Bootstrap CSS & Icons -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 <style>
     body.modal-open {
         overflow-x: hidden;
     }
 
-    #filterModal .modal-dialog {
-        margin: 0;
-        width: 100%;
-        max-width: 100%;
+    /* Küçük ekranlar (mobil) için */
+    @media (max-width: 991.98px) {
+        #filterModal .modal-dialog {
+            margin: 0;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        #filterModal .modal-content {
+            background-color: #06264e;
+            color: #ffffff;
+            border-radius: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 0;
+        }
+
+       
+        #filterModal input.form-control,
+        #filterModal select.form-select,
+        #filterModal button.btn {
+            font-size: 18px;
+        }
     }
 
-    #filterModal .modal-content {
-        background-color: #06264e;
-        color: #ffffff;
-        border-radius: 0;
-        min-height: 100vh;
-        overflow-x: hidden;
+    /* Büyük ekranlar (desktop) için */
+    @media (min-width: 992px) {
+        #filterModal .modal-dialog {
+            margin: 2rem auto;
+            width: 100%;
+            max-width: 700px;
+        }
+
+        #filterModal .modal-content {
+            background-color: #06264e;
+            color: #ffffff;
+            border-radius: 1rem;
+            padding: 2rem;
+            overflow-x: hidden;
+            min-height: auto;
+        }
+
+        #filterModal .modal-body {
+            padding: 1rem 0 0 0;
+        }
+
+        /* Büyük ekranda da input ve select yazılarını biraz küçültelim */
+        #filterModal input.form-control,
+        #filterModal select.form-select,
+        #filterModal button.btn {
+            font-size: 0.95rem;
+        }
     }
 </style>
+
+
 
 <!-- Filtr Modalı -->
 <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
@@ -43,7 +78,7 @@
                         </div>
 
                         <div class="row g-4">
-                            <div class="col-12 col-md-6">
+                            <div class="col-6">
                                 <select class="form-select form-select-lg bg-secondary text-white border-0 rounded w-100" name="category">
                                     <option selected disabled>Kateqoriya</option>
                                     <option value="ev">Daire</option>
@@ -51,7 +86,7 @@
                                     <option value="ofis">Ofis</option>
                                 </select>
                             </div>
-                            <div class="col-12 col-md-6">
+                            <div class="col-6">
                                 <select class="form-select form-select-lg bg-secondary text-white border-0 rounded w-100" name="operation">
                                     <option selected disabled>Əməliyyat növü</option>
                                     <option value="almaq">Satın almaq</option>
