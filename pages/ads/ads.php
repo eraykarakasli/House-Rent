@@ -1,4 +1,5 @@
 <?php
+session_start(); 
 include "../../tema/includes/header/header.php";
 $map = isset($_GET['map']) && $_GET['map'] === 'on';
 ?>

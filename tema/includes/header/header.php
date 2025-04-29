@@ -1,16 +1,29 @@
+<?php
+include_once __DIR__ . "/../../../tema/includes/config.php";
+
+// Site ayarlarını veritabanından al
+$stmt = $baglanti->prepare("SELECT * FROM site_settings ORDER BY id DESC LIMIT 1");
+$stmt->execute();
+$site = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$site_title = $site['sayt_basliq'] ?? 'title';
+$site_favicon = '/' . ltrim($site['favicon'] ?? 'assets/icon.png', '/');
+$site_logo = '/' . ltrim($site['logo'] ?? 'assets/icon.png', '/');
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../../../assets/icon.png" type="image/x-icon">
+    <link rel="icon" href="<?= htmlspecialchars($site_favicon) ?>" type="image/x-icon">
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <title>Ev10</title>
+    <title><?= htmlspecialchars($site_title) ?></title>
 </head>
 
 <body class="">
@@ -18,8 +31,8 @@
         <div class="container">
             <!-- Sol logo -->
             <a class="navbar-brand d-flex align-items-center" href="../../index.php">
-                <img src="../../../assets/icon.png" alt="Logo" width="48">
-                <span class="fw-semibold fs-2" style="color: #0d98ba;">ev10</span>
+                <img src="<?= htmlspecialchars($site_logo) ?>" alt="Logo" width="48">
+                <span class="fw-semibold fs-2" style="color: #0d98ba;"><?= htmlspecialchars($site_title) ?></span>
             </a>
             <!-- Mobil menü butonu -->
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
@@ -29,12 +42,12 @@
             <div class="collapse navbar-collapse justify-content-between" id="navbarContent">
                 <!-- Orta Menü -->
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-3">
-                    <li class="nav-item"><a class="nav-link" href="../../pages/ads/ads.php">Ev alqı satqısı</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../../pages/ads/ads.php">Kirayə</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../../pages/ads/ads.php">Günlük</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../../pages/ads/ads.php">Otaq yoldaşı</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../../pages/ads/ads.php">Yaşayış Kompleksləri</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../../pages/ads/ads.php">İpoteka</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/pages/ads/ads.php?category=obyekt">Obyekt</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/pages/ads/ads.php?category=ofis">Ofis</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/pages/ads/ads.php?category=qaraj">Qaraj</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/pages/ads/ads.php?category=torpaq">Torpaq</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/pages/ads/ads.php?category=menzil">Menzil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/pages/ads/ads.php?category=heyet">Həyət evi / Bağ evi</a></li>
                 </ul>
                 <!-- Sağ Butonlar -->
                 <div class="d-flex align-items-center gap-3">

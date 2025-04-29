@@ -1,11 +1,41 @@
 <?php
-include "../../tema/includes/config.php"; // Eğer zaten dahilse tekrar koymana gerek yok
+
+include "../../tema/includes/config.php"; // Veritabanı bağlantısı
+
+$userFavorites = [];
+
+if (isset($_SESSION['user_id'])) {
+    // Giriş yaptıysa, kullanıcının favorilerini alalım
+    $stmt = $baglanti->prepare("SELECT favorites FROM users WHERE id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user && !empty($user['favorites'])) {
+        $userFavorites = json_decode($user['favorites'], true); // JSON'dan array'e çeviriyoruz
+    }
+}
 
 $map = isset($_GET['map']) && $_GET['map'] === 'on';
+$category = $_GET['category'] ?? null;
+$sort = $_GET['sort'] ?? null;
 
-// Veritabanından aktif (status = 1) ilanları çekiyoruz
-$stmt = $baglanti->prepare("SELECT * FROM ads WHERE status = 1 ORDER BY created_at DESC");
-$stmt->execute();
+// Sıralama türüne göre SQL parçası belirleniyor
+$orderClause = "ORDER BY created_at DESC"; // Varsayılan sıralama
+if ($sort === 'ucuzdan-bahaya') {
+    $orderClause = "ORDER BY price ASC";
+} elseif ($sort === 'bahadan-ucuza') {
+    $orderClause = "ORDER BY price DESC";
+}
+
+// İlanları sorgula
+if ($category) {
+    $stmt = $baglanti->prepare("SELECT * FROM ads WHERE status = 1 AND category = ? $orderClause");
+    $stmt->execute([$category]);
+} else {
+    $stmt = $baglanti->prepare("SELECT * FROM ads WHERE status = 1 $orderClause");
+    $stmt->execute();
+}
+
 $ads = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -13,18 +43,9 @@ $ads = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 <?= $map ? 'row-cols-lg-3' : 'row-cols-lg-5' ?> g-4">
         <?php foreach ($ads as $ad): ?>
             <?php
-            // Images alanını JSON'dan array'e çeviriyoruz
+            // Resimleri JSON'dan alıyoruz
             $imagesArray = json_decode($ad['images'], true);
-
-            // İlk resim var mı kontrol ediyoruz
-            if (!empty($imagesArray) && is_array($imagesArray)) {
-                $firstImage = "../../tema/" . ltrim($imagesArray[0], '/');
-            } else {
-                $firstImage = "../../assets/no-image.webp"; // Default resim
-            }
-
-            // Özellikler alanı
-            $features = !empty($ad['features']) ? explode(',', $ad['features']) : [];
+            $firstImage = !empty($imagesArray) ? "../../tema/" . ltrim($imagesArray[0], '/') : "../../assets/no-image.webp";
             ?>
             <div class="col">
                 <a href="../../pages/adsdetail/adsdetail.php?id=<?= $ad['id'] ?>" class="text-decoration-none text-dark">
@@ -33,31 +54,10 @@ $ads = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <!-- İlan Resmi -->
                         <div class="position-relative" style="height: 200px;">
                             <img src="<?= htmlspecialchars($firstImage) ?>" class="d-block w-100" alt="İlan Fotoğrafı" style="height: 200px; object-fit: cover;">
-                            <button class="btn btn-light btn-sm rounded-circle position-absolute top-0 end-0 m-2">
-                                <i class="bi bi-heart"></i>
-                            </button>
-
-                            <!-- Dinamik Özellik İkonları -->
-                            <div class="position-absolute top-0 start-0 m-2 d-flex flex-row gap-1">
-
-                                <?php if (!empty($ad['certificate']) && $ad['certificate'] == 1): ?>
-                                    <span class="btn btn-success btn-sm rounded-circle" title="Çıxarış var">
-                                        <i class="bi bi-clipboard-check-fill"></i>
-                                    </span>
-                                <?php endif; ?>
-
-                                <?php if (!empty($ad['mortgage']) && $ad['mortgage'] == 1): ?>
-                                    <span class="btn btn-warning btn-sm rounded-circle" title="İpoteka mümkündür">
-                                        <i class="bi bi-percent"></i>
-                                    </span>
-                                <?php endif; ?>
-
-                                <?php if (!empty($ad['renovated']) && $ad['renovated'] == 1): ?>
-                                    <span class="btn btn-danger btn-sm rounded-circle" title="Təmirli">
-                                        <i class="bi bi-hammer"></i>
-                                    </span>
-                                <?php endif; ?>
-                            </div>
+                            <!-- Favori ekle/çıkar butonu -->
+                            <a href="../../tema/includes/add_fav.php?id=<?= $ad['id'] ?>" class="btn btn-light btn-sm rounded-circle position-absolute top-0 end-0 m-2">
+                                <i class="bi <?= in_array((int)$ad['id'], $userFavorites) ? 'bi-heart-fill text-danger' : 'bi-heart' ?>"></i>
+                            </a>
                         </div>
 
                         <!-- İlan Bilgileri -->
@@ -94,3 +94,4 @@ $ads = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endforeach; ?>
     </div>
 </div>
+

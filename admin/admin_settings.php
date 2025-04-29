@@ -4,9 +4,7 @@ include './includes/header.php';
 include './includes/sidebar.php';
 include './includes/session_check.php';
 
-
-// Önce mevcut veriyi çek
-$stmt = $baglanti->prepare("SELECT * FROM site_ayarlar WHERE id = 1");
+$stmt = $baglanti->prepare("SELECT * FROM site_settings WHERE id = 1");
 $stmt->execute();
 $settings = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -14,41 +12,50 @@ $siteTitle = $settings['sayt_basliq'] ?? '';
 $siteDescription = $settings['sayt_haqqinda'] ?? '';
 $faviconPath = $settings['favicon'] ?? '';
 $logoPath = $settings['logo'] ?? '';
+$terms = $settings['terms'] ?? '';
+$phone = $settings['phone'] ?? '';
+$email = $settings['email'] ?? '';
+$facebook = $settings['facebook'] ?? '';
+$instagram = $settings['instagram'] ?? '';
 
 if (isset($_POST['save'])) {
     $siteTitle = $_POST['site_title'];
     $siteDescription = $_POST['site_description'];
+    $terms = $_POST['terms'];
+    $phone = $_POST['phone'];
+    $email = $_POST['email'];
+    $facebook = $_POST['facebook'];
+    $instagram = $_POST['instagram'];
 
-    // Favicon yükle
+    $uploadDir = realpath(__DIR__ . '/../assets/uploads/') . '/';
+    if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
+
     if (!empty($_FILES['favicon']['name'])) {
         $faviconName = uniqid() . '_' . $_FILES['favicon']['name'];
         $faviconTmp = $_FILES['favicon']['tmp_name'];
         $faviconPath = 'assets/uploads/' . $faviconName;
-        move_uploaded_file($faviconTmp, $faviconPath);
+        move_uploaded_file($faviconTmp, $uploadDir . $faviconName);
     }
 
-    // Logo yükle
     if (!empty($_FILES['logo']['name'])) {
         $logoName = uniqid() . '_' . $_FILES['logo']['name'];
         $logoTmp = $_FILES['logo']['tmp_name'];
         $logoPath = 'assets/uploads/' . $logoName;
-        move_uploaded_file($logoTmp, $logoPath);
+        move_uploaded_file($logoTmp, $uploadDir . $logoName);
     }
 
-    // Ayar daha önce varsa → UPDATE, yoksa INSERT
-    $stmtCheck = $baglanti->prepare("SELECT COUNT(*) FROM site_ayarlar WHERE id = 1");
+    $stmtCheck = $baglanti->prepare("SELECT COUNT(*) FROM site_settings WHERE id = 1");
     $stmtCheck->execute();
     $exists = $stmtCheck->fetchColumn();
 
     if ($exists) {
-        $stmt = $baglanti->prepare("UPDATE site_ayarlar SET sayt_basliq=?, sayt_haqqinda=?, favicon=?, logo=? WHERE id=1");
-        $result = $stmt->execute([$siteTitle, $siteDescription, $faviconPath, $logoPath]);
+        $stmt = $baglanti->prepare("UPDATE site_settings SET sayt_basliq=?, sayt_haqqinda=?, favicon=?, logo=?, terms=?, phone=?, email=?, facebook=?, instagram=? WHERE id=1");
+        $result = $stmt->execute([$siteTitle, $siteDescription, $faviconPath, $logoPath, $terms, $phone, $email, $facebook, $instagram]);
     } else {
-        $stmt = $baglanti->prepare("INSERT INTO site_ayarlar (id, sayt_basliq, sayt_haqqinda, favicon, logo) VALUES (1, ?, ?, ?, ?)");
-        $result = $stmt->execute([$siteTitle, $siteDescription, $faviconPath, $logoPath]);
+        $stmt = $baglanti->prepare("INSERT INTO site_settings (id, sayt_basliq, sayt_haqqinda, favicon, logo, terms, phone, email, facebook, instagram) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $result = $stmt->execute([$siteTitle, $siteDescription, $faviconPath, $logoPath, $terms, $phone, $email, $facebook, $instagram]);
     }
 
-    // Sayfa yenileme
     if ($result) {
         header("Location: admin_settings.php?status=success");
         exit;
@@ -58,6 +65,11 @@ if (isset($_POST['save'])) {
 }
 ?>
 
+<!-- Summernote CSS -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.css" rel="stylesheet">
+<!-- Summernote JS -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js"></script>
+
 <div class="container-fluid p-4" style="max-width: 720px;">
     <h3 class="mb-4">Sayt Ayarları</h3>
 
@@ -66,50 +78,74 @@ if (isset($_POST['save'])) {
     <?php endif; ?>
 
     <form action="" method="post" enctype="multipart/form-data" class="row g-4">
-        
-        <!-- Site Title -->
         <div class="col-12">
             <label class="form-label">Sayt Başlığı:</label>
             <input type="text" name="site_title" class="form-control" value="<?= htmlspecialchars($siteTitle) ?>" required>
         </div>
 
-        <!-- Site Description -->
         <div class="col-12">
             <label class="form-label">Sayt Haqqında:</label>
             <textarea name="site_description" class="form-control" rows="4" required><?= htmlspecialchars($siteDescription) ?></textarea>
         </div>
 
-        <!-- Favicon -->
+        <div class="col-12">
+            <label class="form-label">Telefon:</label>
+            <input type="text" name="phone" class="form-control" value="<?= htmlspecialchars($phone) ?>">
+        </div>
+
+        <div class="col-12">
+            <label class="form-label">E-poçt:</label>
+            <input type="email" name="email" class="form-control" value="<?= htmlspecialchars($email) ?>">
+        </div>
+
+        <div class="col-6">
+            <label class="form-label">Facebook:</label>
+            <input type="text" name="facebook" class="form-control" value="<?= htmlspecialchars($facebook) ?>">
+        </div>
+
+        <div class="col-6">
+            <label class="form-label">Instagram:</label>
+            <input type="text" name="instagram" class="form-control" value="<?= htmlspecialchars($instagram) ?>">
+        </div>
+
+        <div class="col-12">
+            <label class="form-label">İstifadəçi Razılaşması:</label>
+            <textarea name="terms" id="terms" class="form-control"><?= htmlspecialchars($terms) ?></textarea>
+        </div>
+
         <div class="col-12">
             <label class="form-label d-block">Mövcud Favicon:</label>
-            <?php if (!empty($faviconPath) && file_exists($faviconPath)): ?>
-                <img src="<?= $faviconPath ?>" alt="Favicon" class="img-thumbnail mb-2" width="64">
+            <?php if (!empty($faviconPath) && file_exists(__DIR__ . '/../' . $faviconPath)): ?>
+                <img src="../<?= $faviconPath ?>" alt="Favicon" class="img-thumbnail mb-2" width="64">
             <?php else: ?>
                 <p class="text-muted small fst-italic">Heç bir favicon yüklənməyib.</p>
             <?php endif; ?>
-            <label class="form-label mt-2">Yeni Favicon Yüklə:</label>
-            <input type="file" name="favicon" class="form-control">
+            <input type="file" name="favicon" class="form-control mt-2">
         </div>
 
-        <!-- Logo -->
         <div class="col-12">
             <label class="form-label d-block">Mövcud Logo:</label>
-            <?php if (!empty($logoPath) && file_exists($logoPath)): ?>
-                <img src="<?= $logoPath ?>" alt="Logo" class="img-thumbnail mb-2" width="120">
+            <?php if (!empty($logoPath) && file_exists(__DIR__ . '/../' . $logoPath)): ?>
+                <img src="../<?= $logoPath ?>" alt="Logo" class="img-thumbnail mb-2" width="120">
             <?php else: ?>
                 <p class="text-muted small fst-italic">Heç bir logo yüklənməyib.</p>
             <?php endif; ?>
-            <label class="form-label mt-2">Yeni Logo Yüklə:</label>
-            <input type="file" name="logo" class="form-control">
+            <input type="file" name="logo" class="form-control mt-2">
         </div>
 
-        <!-- Submit -->
         <div class="col-12">
             <button type="submit" name="save" class="btn btn-primary w-100">Yadda Saxla</button>
         </div>
     </form>
 </div>
 
-
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        $('#terms').summernote({
+            height: 200,
+            placeholder: "İstifadəçi razılaşması mətnini buraya yazın..."
+        });
+    });
+</script>
 
 <?php include './includes/footer.php'; ?>

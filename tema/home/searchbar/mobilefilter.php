@@ -20,7 +20,7 @@
             padding: 0;
         }
 
-       
+
         #filterModal input.form-control,
         #filterModal select.form-select,
         #filterModal button.btn {
@@ -56,6 +56,11 @@
             font-size: 0.95rem;
         }
     }
+
+    #locationInput::placeholder {
+    color: #ffffff; /* Placeholder yazısı beyaz */
+    opacity: 1;     /* Tam görünür olsun */
+}
 </style>
 
 
@@ -74,7 +79,7 @@
                         <!-- Konum Seçimi Satırı -->
                         <div class="d-flex align-items-center gap-2 mb-4 text-white">
                             <i class="bi bi-geo-alt fs-4"></i>
-                            <input type="text" class="form-control form-control-lg bg-secondary text-white border-0 rounded w-100" placeholder="Yer seçin">
+                            <input type="text" class="form-control form-control-lg bg-secondary text-white border-0 rounded w-100" placeholder="Yer seçin" id="locationInput">
                         </div>
 
                         <div class="row g-4">
@@ -128,7 +133,7 @@
                     </div>
 
                     <div class="mt-5">
-                        <button type="submit" class="btn btn-lg btn-light w-100 rounded-pill fw-semibold">290 Elanı göstər</button>
+                        <button type="submit" class="btn btn-lg btn-light w-100 rounded-pill fw-semibold">Elanı göstər</button>
                     </div>
                 </form>
             </div>

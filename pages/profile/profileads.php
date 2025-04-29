@@ -9,12 +9,15 @@ include "../../tema/includes/header/header.php";
         <?php include "../../tema/profile/sidebar/profilesidebar.php"; ?>
 
         <?php
-        // Hedef sayfa parametresi: ?page=ads OR ?page=new
+        // Hedef sayfa parametresi: ?page=ads OR ?page=new OR ?page=edit
         $page = isset($_GET['page']) ? $_GET['page'] : 'ads';
 
         switch ($page) {
             case 'new':
                 include "../../tema/profile/content/post-ad.php";
+                break;
+            case 'edit':
+                include "../../tema/profile/content/edit_ad.php";
                 break;
             case 'ads':
             default:

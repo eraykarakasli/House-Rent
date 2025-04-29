@@ -1,3 +1,16 @@
+<?php
+
+$userId = $_SESSION['user_id'] ?? null;
+if (!$userId) {
+    header("Location: /login.php");
+    exit;
+}
+
+$stmt = $baglanti->prepare("SELECT * FROM ads WHERE user_id = ? ORDER BY created_at DESC");
+$stmt->execute([$userId]);
+$ads = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
 <div class="col-md-8 col-lg-9">
     <!-- Sayfa Başlığı ve Buton -->
     <div class="d-flex justify-content-between align-items-center shadow-sm border rounded-4 p-4 mb-4 flex-wrap gap-3">
@@ -6,59 +19,76 @@
             <i class="bi bi-plus-circle me-2"></i> Yeni Elan Yarat
         </a>
     </div>
+    <!-- alert -->
+    <?php if (isset($_GET['deleted'])): ?>
+        <?php
+        $msgType = 'danger';
+        $msgText = 'Bilinməyən xəta baş verdi.';
+
+        if ($_GET['deleted'] === 'success') {
+            $msgType = 'success';
+            $msgText = 'Elan uğurla silindi.';
+        } elseif ($_GET['deleted'] === 'unauthorized') {
+            $msgText = 'Bu elanı silmək üçün icazəniz yoxdur.';
+        } elseif ($_GET['deleted'] === 'invalid') {
+            $msgText = 'Keçərsiz istək göndərildi.';
+        }
+        ?>
+        <div class="alert alert-<?= $msgType ?> alert-dismissible fade show mt-3" role="alert">
+            <?= $msgText ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Bağla"></button>
+        </div>
+    <?php endif; ?>
+
+
 
     <!-- Elan Kartları -->
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-        <?php for ($i = 1; $i <= 6; $i++): ?>
+        <?php foreach ($ads as $ad): ?>
+            <?php
+            $images = json_decode($ad['images'], true);
+            $imagePath = (!empty($images) && isset($images[0]))
+                ? '/tema/' . ltrim($images[0], '/')
+                : '/tema/assets/no-image.webp';
+            ?>
             <div class="col">
                 <div class="card h-100 position-relative shadow-sm border-0 rounded-4 overflow-hidden">
-                    <!-- Carousel -->
-                    <div class="position-relative">
-                        <div id="myAdCarousel<?= $i ?>" class="carousel slide" data-bs-ride="false">
-                            <div class="carousel-inner rounded" style="height: 200px;">
-                                <div class="carousel-item active">
-                                    <img src="../../assets/evresim.webp" class="d-block w-100" style="height: 200px; object-fit: cover;" alt="ev">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="../../assets/evresim2.webp" class="d-block w-100" style="height: 200px; object-fit: cover;" alt="ev">
-                                </div>
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#myAdCarousel<?= $i ?>" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" style="filter: invert(1);"></span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#myAdCarousel<?= $i ?>" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" style="filter: invert(1);"></span>
-                            </button>
-                        </div>
-                    </div>
+                    <img src="<?= htmlspecialchars($imagePath) ?>" class="d-block w-100" style="height: 200px; object-fit: cover;" alt="İlan Foto">
 
-                    <!-- Kart İçeriği -->
                     <div class="p-3">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <strong class="fs-6">145,000 AZN</strong>
-                            <span class="badge bg-success">Aktiv</span>
+                            <strong class="fs-6"><?= number_format($ad['price'], 0, ',', ' ') ?> AZN</strong>
+                            <span class="badge <?= $ad['status'] ? 'bg-success' : 'bg-secondary' ?>">
+                                <?= $ad['status'] ? 'Aktiv' : 'Gizli' ?>
+                            </span>
                         </div>
                         <div class="mb-2 text-secondary d-flex align-items-center">
-                            <i class="bi bi-geo-alt me-1"></i> <span>Əhmədli, Bakı</span>
+                            <i class="bi bi-geo-alt me-1"></i> <span><?= htmlspecialchars($ad['address']) ?></span>
                         </div>
                         <div class="d-flex justify-content-between text-secondary mb-3">
-                            <div class="d-flex align-items-center"><i class="bi bi-building me-1"></i> 6/9</div>
-                            <div class="d-flex align-items-center"><i class="bi bi-door-open me-1"></i> 3 otaq</div>
-                            <div class="d-flex align-items-center"><i class="bi bi-aspect-ratio me-1"></i> 80m²</div>
+                            <div><i class="bi bi-building me-1"></i> <?= $ad['floor'] ?></div>
+                            <div><i class="bi bi-door-open me-1"></i> <?= $ad['room_count'] ?> otaq</div>
+                            <div><i class="bi bi-aspect-ratio me-1"></i> <?= $ad['area'] ?>m²</div>
                         </div>
 
-                        <!-- Yönetim Butonları -->
                         <div class="d-flex justify-content-between">
-                            <a href="ilan-duzenle.php?id=<?= $i ?>" class="btn btn-sm btn-outline-primary rounded-pill">
+                            <a href="/pages/profile/profileads.php?page=edit&id=<?= $ad['id'] ?>" class="btn btn-sm btn-outline-primary rounded-pill">
                                 <i class="bi bi-pencil-square me-1"></i> Düzəlt
                             </a>
-                            <a href="ilan-sil.php?id=<?= $i ?>" onclick="return confirm('Elanı silmək istədiyinizə əminsiniz?')" class="btn btn-sm btn-outline-danger rounded-pill">
+
+
+
+                            <a href="/tema/includes/ad_delete.php?id=<?= $ad['id'] ?>"
+                                onclick="return confirm('Elanı silmək istədiyinizə əminsiniz?')"
+                                class="btn btn-sm btn-outline-danger rounded-pill">
                                 <i class="bi bi-trash me-1"></i> Sil
                             </a>
+
+
                         </div>
                     </div>
                 </div>
             </div>
-        <?php endfor; ?>
+        <?php endforeach; ?>
     </div>
 </div>
