@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once __DIR__ . "/../../../tema/includes/config.php";
 
 // Site ayarlarını veritabanından al
@@ -9,7 +10,6 @@ $site = $stmt->fetch(PDO::FETCH_ASSOC);
 $site_title = $site['sayt_basliq'] ?? 'title';
 $site_favicon = '/' . ltrim($site['favicon'] ?? 'assets/icon.png', '/');
 $site_logo = '/' . ltrim($site['logo'] ?? 'assets/icon.png', '/');
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +26,7 @@ $site_logo = '/' . ltrim($site['logo'] ?? 'assets/icon.png', '/');
     <title><?= htmlspecialchars($site_title) ?></title>
 </head>
 
-<body class="">
+<body>
     <nav class="navbar navbar-expand-lg bg-white border-bottom fixed-top" style="min-height: 100px;">
         <div class="container">
             <!-- Sol logo -->
@@ -62,15 +62,21 @@ $site_logo = '/' . ltrim($site['logo'] ?? 'assets/icon.png', '/');
                             <i class="bi bi-list"></i> <i class="bi bi-person"></i>
                         </button>
                         <div class="dropdown-menu p-1 py-2 text-center shadow rounded-3" style="min-width: 90px;">
-                            <!-- Daxil ol -->
-                            <a href="/pages/auth/register.php" class="text-dark text-decoration-none d-block  dropdown-item" style="font-size: 14px;">
-                                Daxil Ol
-                            </a>
-                            <div class="border-bottom"></div>
-                            <!-- Kabinetim -->
-                            <a href="/pages/profile/profile.php" class="text-dark text-decoration-none d-block  dropdown-item" style="font-size: 14px;">
-                                Kabinetim
-                            </a>
+                            <?php if (!isset($_SESSION['user_id'])): ?>
+                                <!-- Giriş yapılmamışsa: Daxil ol -->
+                                <a href="/pages/auth/register.php" class="text-dark text-decoration-none d-block dropdown-item" style="font-size: 14px;">
+                                    Daxil Ol
+                                </a>
+                            <?php else: ?>
+                                <!-- Giriş yapılmışsa: Kabinetim ve Seçilmişlər -->
+                                <a href="/pages/profile/profile.php" class="text-dark text-decoration-none d-block dropdown-item" style="font-size: 14px;">
+                                    Kabinetim
+                                </a>
+                                <div class="border-bottom"></div>
+                                <a href="/pages/profile/profilefavorites.php" class="text-dark text-decoration-none d-block dropdown-item" style="font-size: 14px;">
+                                    Seçilmişlər
+                                </a>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

@@ -43,7 +43,6 @@ $ads = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 <?= $map ? 'row-cols-lg-3' : 'row-cols-lg-5' ?> g-4">
         <?php foreach ($ads as $ad): ?>
             <?php
-            // Resimleri JSON'dan alıyoruz
             $imagesArray = json_decode($ad['images'], true);
             $firstImage = !empty($imagesArray) ? "../../tema/" . ltrim($imagesArray[0], '/') : "../../assets/no-image.webp";
             ?>
@@ -54,10 +53,31 @@ $ads = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <!-- İlan Resmi -->
                         <div class="position-relative" style="height: 200px;">
                             <img src="<?= htmlspecialchars($firstImage) ?>" class="d-block w-100" alt="İlan Fotoğrafı" style="height: 200px; object-fit: cover;">
-                            <!-- Favori ekle/çıkar butonu -->
+
+                            <!-- Favori butonu -->
                             <a href="../../tema/includes/add_fav.php?id=<?= $ad['id'] ?>" class="btn btn-light btn-sm rounded-circle position-absolute top-0 end-0 m-2">
                                 <i class="bi <?= in_array((int)$ad['id'], $userFavorites) ? 'bi-heart-fill text-danger' : 'bi-heart' ?>"></i>
                             </a>
+
+                            <!-- Kupça, İpoteka, Təmirli ikonları -->
+                            <div class="position-absolute top-0 start-0 m-2 d-flex gap-1">
+                                <?php if (!empty($ad['certificate']) && $ad['certificate'] == 1): ?>
+                                    <span class="btn btn-success btn-sm rounded-circle text-center" title="Çıxarış var">
+                                        <i class="bi bi-clipboard-check-fill"></i>
+                                    </span>
+                                <?php endif; ?>
+                                <?php if (!empty($ad['mortgage']) && $ad['mortgage'] == 1): ?>
+                                    <span class="btn btn-warning btn-sm rounded-circle text-center" title="İpoteka var">
+                                        <i class="bi bi-percent"></i>
+                                    </span>
+                                <?php endif; ?>
+                                <?php if (!empty($ad['renovated']) && $ad['renovated'] == 1): ?>
+                                    <span class="btn btn-danger btn-sm rounded-circle text-center" title="Təmirli">
+                                        <i class="bi bi-hammer"></i>
+                                    </span>
+                                <?php endif; ?>
+                            </div>
+
                         </div>
 
                         <!-- İlan Bilgileri -->
@@ -94,4 +114,3 @@ $ads = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endforeach; ?>
     </div>
 </div>
-

@@ -2,13 +2,26 @@
 include "../../tema/includes/header/header.php";
 include "../../tema/includes/config.php";
 
-// Terms verisini çek
-$stmt = $baglanti->prepare("SELECT terms FROM site_settings WHERE id = 1 LIMIT 1");
-$stmt->execute();
-$row = $stmt->fetch(PDO::FETCH_ASSOC);
-$terms_content = $row ? $row['terms'] : '<p>İstifadəçi razılaşması tapılmadı.</p>';
+// Slug parametresi alınıyor
+$slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
+if (empty($slug)) {
+    echo "<div class='container my-5'><p class='text-danger'>Səhifə tapılmadı.</p></div>";
+    include "../../tema/includes/footer/footer.php";
+    exit;
+}
 
-// Summernote HTML düzeltici
+// Veritabanından slug'a göre sayfa çek
+$stmt = $baglanti->prepare("SELECT * FROM static_pages WHERE slug = ? LIMIT 1");
+$stmt->execute([$slug]);
+$page = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$page) {
+    echo "<div class='container my-5'><p class='text-danger'>Bu səhifə mövcud deyil.</p></div>";
+    include "../../tema/includes/footer/footer.php";
+    exit;
+}
+
+// HTML düzeltici
 function fixHtmlContent($html) {
     libxml_use_internal_errors(true);
     $doc = new DOMDocument();
@@ -18,14 +31,20 @@ function fixHtmlContent($html) {
 }
 ?>
 
+<!-- İçerik Bölümü -->
 <div class="container my-5 min-vh-100">
-    <h2 class="text-center fw-bold mb-4 fs-2">İstifadəçi Razılaşması</h2>
-    <div class="post-content fs-5 lh-lg">
-        <?= fixHtmlContent($terms_content) ?>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-11 col-lg-10">
+            <h2 class="mb-5 text-center fw-bold fs-1"><?= htmlspecialchars($page['title']) ?></h2>
+
+            <div class="post-content fs-5 lh-lg">
+                <?= fixHtmlContent($page['content']) ?>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- Stil düzeltmeleri -->
+<!-- İçerik düzenleme stili -->
 <style>
     .post-content {
         overflow-wrap: break-word;
