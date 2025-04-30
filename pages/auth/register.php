@@ -6,7 +6,12 @@ if (isset($_SESSION['user_id']) || isset($_COOKIE['user_id'])) {
     header("Location: /index.php");
     exit;
 }
+
 include '../../tema/includes/config.php';
+
+// 🌟 site_settings tablosundan ayarları çek
+$settingStmt = $baglanti->query("SELECT * FROM site_settings LIMIT 1");
+$settings = $settingStmt->fetch(PDO::FETCH_ASSOC);
 
 $message = '';
 $firstName = '';
@@ -32,10 +37,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             try {
-                $stmt = $pdo->prepare("INSERT INTO users (first_name, last_name, email, phone, password, terms_accepted) VALUES (?, ?, ?, ?, ?, ?)");
+                $stmt = $baglanti->prepare("INSERT INTO users (first_name, last_name, email, phone, password, terms_accepted) VALUES (?, ?, ?, ?, ?, ?)");
                 $stmt->execute([$firstName, $lastName, $email, $phone, $hashedPassword, $termsAccepted]);
                 $message = '<div class="alert alert-success">Qeydiyyat uğurla tamamlandı!</div>';
-                // Temizle
                 $firstName = $lastName = $email = $phone = '';
             } catch (PDOException $e) {
                 if ($e->getCode() == 23000) {
@@ -56,17 +60,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../../../assets/icon.png" type="image/x-icon">
+
+    <meta name="description" content="<?= htmlspecialchars($settings['sayt_haqqinda']) ?>">
+    <meta name="keywords" content="ev10, qeydiyyat, emlak, <?= htmlspecialchars($settings['sayt_basliq']) ?>">
+    <meta name="author" content="<?= htmlspecialchars($settings['sayt_basliq']) ?>">
+
+    <title><?= htmlspecialchars($settings['sayt_basliq']) ?> - Qeydiyyat</title>
+
+    <link rel="icon" href="/<?= htmlspecialchars($settings['favicon']) ?>" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <title>Ev10 - Qeydiyyat</title>
 </head>
 
 <body class="container p-2" style="min-height: 100vh;">
     <nav class="navbar-expand-lg mt-4" style="min-height: 100px;">
         <a class="navbar-brand d-flex align-items-center gap-2" href="/index.php">
-            <img src="../../../assets/icon.png" alt="Logo" width="32">
-            <span class="fw-bold text-primary">ev10</span>
+            <img src="/<?= htmlspecialchars($settings['logo']) ?>" alt="Logo" width="32">
+            <span class="fw-bold text-primary"><?= htmlspecialchars($settings['sayt_basliq']) ?></span>
         </a>
     </nav>
 

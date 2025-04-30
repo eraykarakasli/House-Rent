@@ -1,28 +1,27 @@
 <?php
+// ✓ Oturum kontrolü ve veritabanı bağlantısı
 session_start();
 include __DIR__ . '/config.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+// ✓ Form POST ile geldiyse işlem başlat
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $user_id = $_SESSION['user_id'] ?? null;
-    $ad_id = (int) ($_POST['id'] ?? 0);
-
-    if (!$user_id || !$ad_id) {
+    if (!$user_id) {
         header("Location: /login.php");
         exit;
     }
 
-    $stmt = $baglanti->prepare("SELECT * FROM ads WHERE id = ? AND user_id = ?");
-    $stmt->execute([$ad_id, $user_id]);
-    $ad = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$ad) {
-        header("Location: /pages/profile/profileads.php?edit=notfound");
+    $id = (int) ($_POST['id'] ?? 0);
+    if ($id <= 0) {
+        echo "Elan ID tapılmadı.";
         exit;
     }
 
-    // Verileri al
+    // ✓ Formdan gelen verileri al
     $title = trim($_POST['title'] ?? '');
     $category = $_POST['category'] ?? '';
+    $operation_type = $_POST['operation_type'] ?? '';
+    $building_condition = $_POST['building_condition'] ?? '';
     $area = (int) ($_POST['area'] ?? 0);
     $land_area = isset($_POST['land_area']) ? (int) $_POST['land_area'] : null;
     $certificate = isset($_POST['certificate']) ? (int) $_POST['certificate'] : 0;
@@ -35,31 +34,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $address = trim($_POST['address'] ?? '');
     $latitude = $_POST['latitude'] ?? '';
     $longitude = $_POST['longitude'] ?? '';
+    $city = $_POST['city'] ?? '';
+    $district = $_POST['district'] ?? '';
+    $neighborhood = $_POST['neighborhood'] ?? '';
     $features = isset($_POST['features']) ? json_encode($_POST['features'], JSON_UNESCAPED_UNICODE) : json_encode([], JSON_UNESCAPED_UNICODE);
 
-    // Mevcut görseller
-    $image_paths = json_decode($ad['images'], true) ?? [];
-
-    // ⛔ Silinmesi istenen görseller
     $removed_images = $_POST['removed_images'] ?? [];
+    $removed_images = is_array($removed_images) ? $removed_images : [];
 
-    if (!empty($removed_images)) {
-        foreach ($removed_images as $removed) {
-            // Dosyayı gerçekten sil
-            $filepath = __DIR__ . '/../' . $removed;
-            if (file_exists($filepath)) {
-                unlink($filepath);
-            }
-        }
+    // ✓ Mevcut ilan verisini kontrol et
+    $stmt = $baglanti->prepare("SELECT * FROM ads WHERE id = ? AND user_id = ? LIMIT 1");
+    $stmt->execute([$id, $user_id]);
+    $ad = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // image_paths dizisinden çıkar
-        $image_paths = array_values(array_filter($image_paths, function ($img) use ($removed_images) {
-            return !in_array($img, $removed_images);
-        }));
+    if (!$ad) {
+        echo "Elan tapılmadı ve ya silinib.";
+        exit;
     }
 
-    // 📷 Yeni yüklenen görselleri işle
+    // ✓ Görsel yükleme
     $upload_dir = __DIR__ . '/../assets/uploads/ads/';
+    $image_paths = json_decode($ad['images'], true) ?? [];
+
+    // Eski resimlerden silinenleri kaldır
+    $image_paths = array_filter($image_paths, fn($img) => !in_array($img, $removed_images));
+
+    // Yeni resimleri ekle
     if (!is_dir($upload_dir)) {
         mkdir($upload_dir, 0777, true);
     }
@@ -69,23 +69,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ext = pathinfo($_FILES['images']['name'][$key], PATHINFO_EXTENSION);
             $filename = 'ad_' . $user_id . '_' . time() . '_' . $key . '.' . $ext;
             $target_path = $upload_dir . $filename;
+
             if (move_uploaded_file($tmp_name, $target_path)) {
                 $image_paths[] = 'assets/uploads/ads/' . $filename;
             }
         }
     }
 
-    // Veritabanını güncelle
-    $stmt = $baglanti->prepare("UPDATE ads SET title=?, category=?, area=?, land_area=?, certificate=?, mortgage=?, renovated=?, floor=?, room_count=?, price=?, description=?, address=?, latitude=?, longitude=?, features=?, images=? WHERE id=? AND user_id=?");
-    $stmt->execute([
-        $title, $category, $area, $land_area, $certificate, $mortgage, $renovated,
-        $floor, $room_count, $price, $description, $address, $latitude, $longitude,
-        $features, json_encode($image_paths, JSON_UNESCAPED_UNICODE), $ad_id, $user_id
-    ]);
+    try {
+        $stmt = $baglanti->prepare("UPDATE ads SET title = ?, category = ?, operation_type = ?, building_condition = ?, area = ?, land_area = ?, certificate = ?, mortgage = ?, renovated = ?, floor = ?, room_count = ?, price = ?, description = ?, city = ?, district = ?, neighborhood = ?, address = ?, latitude = ?, longitude = ?, features = ?, images = ? WHERE id = ? AND user_id = ?");
 
-    header("Location: /pages/profile/profileads.php?edit=success");
-    exit;
+        $stmt->execute([
+            $title, $category, $operation_type, $building_condition,
+            $area, $land_area, $certificate, $mortgage, $renovated,
+            $floor, $room_count, $price, $description,
+            $city, $district, $neighborhood, $address,
+            $latitude, $longitude, $features, json_encode(array_values($image_paths)),
+            $id, $user_id
+        ]);
+
+        header("Location: /pages/profile/profileads.php?status=updated");
+        exit;
+
+    } catch (PDOException $e) {
+        echo "Xəta baş verdi: " . $e->getMessage();
+    }
 } else {
     header("Location: /");
     exit;
 }
+?>

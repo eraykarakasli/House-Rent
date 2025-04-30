@@ -1,9 +1,6 @@
 <?php
 include "../../tema/includes/config.php"; 
-if (!isset($_SESSION['user_id'])) {
-    echo "Kullanıcı giriş yapmadı.";
-    exit;
-}
+
 $userId = $_SESSION['user_id'];
 
 // Kullanıcının favorilerini al

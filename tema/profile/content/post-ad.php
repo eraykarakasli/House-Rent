@@ -15,7 +15,7 @@
                 <h4 class="fw-semibold mb-4">1. Əsas Məlumatlar</h4>
 
                 <div class="mb-3">
-                    <label class="form-label">Başlıq</label>
+                    <label class="form-label">Əmlak Başlığı</label>
                     <input type="text" class="form-control rounded-3" name="title" placeholder="Məsələn: 3 otaqlı təmirli mənzil" required>
                 </div>
 
@@ -32,6 +32,23 @@
                     </select>
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label">Əməliyyat növü</label>
+                    <select class="form-select rounded-3" name="operation_type" required>
+                        <option value="">Seçin...</option>
+                        <option value="satilik">Satılıq</option>
+                        <option value="kiraye">Kirayə</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Bina vəziyyəti</label>
+                    <select class="form-select rounded-3" name="building_condition" required>
+                        <option value="">Seçin...</option>
+                        <option value="yeni">Yeni</option>
+                        <option value="ikincil">İkincil</option>
+                    </select>
+                </div>
 
                 <div class="mb-3">
                     <label class="form-label">Sahə (m²)</label>
@@ -86,6 +103,7 @@
                 </div>
             </div>
 
+
             <!-- Step 2: Əmlak Məlumatları -->
             <div id="step2" class="step">
                 <h4 class="fw-semibold mb-4">2. Əmlak Məlumatları</h4>
@@ -99,7 +117,7 @@
                     <label class="form-label">Otaq sayı</label>
                     <select class="form-select rounded-3" name="room_count" required>
                         <option value="">Seçin...</option>
-                        <?php for ($i = 1; $i <= 10; $i++): ?>
+                        <?php for ($i = 0; $i <= 10; $i++): ?>
                             <option value="<?= $i ?>"><?= $i ?> otaq</option>
                         <?php endfor; ?>
                     </select>
@@ -128,6 +146,19 @@
             <!-- Step 3: Xüsusiyyətlər, Konum, Adres -->
             <div id="step3" class="step">
                 <h4 class="fw-semibold mb-4">3. Xüsusiyyətlər, Konum, Adres</h4>
+
+                <div class="mb-3">
+                    <label class="form-label">Şəhər</label>
+                    <input type="text" class="form-control rounded-3" name="city" placeholder="Bakı" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Rayon / İlçe</label>
+                    <input type="text" class="form-control rounded-3" name="district" placeholder="Yasamal" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Məhəllə</label>
+                    <input type="text" class="form-control rounded-3" name="neighborhood" placeholder="Elmlər Akademiyası" required>
+                </div>
 
                 <div class="mb-4">
                     <label class="form-label">Xüsusiyyətlər</label>

@@ -21,6 +21,23 @@ if (isset($_GET['delete'])) {
     exit;
 }
 
+// Promote / Unpromote işlemi
+if (isset($_GET['promote'])) {
+    $id = (int) $_GET['promote'];
+    $stmt = $baglanti->prepare("UPDATE ads SET is_promoted = 1 WHERE id = ?");
+    $stmt->execute([$id]);
+    header("Location: approved_listings.php");
+    exit;
+}
+
+if (isset($_GET['unpromote'])) {
+    $id = (int) $_GET['unpromote'];
+    $stmt = $baglanti->prepare("UPDATE ads SET is_promoted = 0 WHERE id = ?");
+    $stmt->execute([$id]);
+    header("Location: approved_listings.php");
+    exit;
+}
+
 // Toplam ilan sayısını bul
 if ($search != '') {
     $searchNumeric = is_numeric($search) ? (int)$search : 0;
@@ -78,6 +95,15 @@ $ads = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?= number_format($ad['price'], 2) ?></td>
                                 <td><?= date('d.m.Y H:i', strtotime($ad['created_at'])) ?></td>
                                 <td class="text-end">
+                                    <?php if ($ad['is_promoted'] == 1): ?>
+                                        <a href="?unpromote=<?= $ad['id'] ?>" class="btn btn-sm btn-warning ms-2" title="Öne Çıxarılmanı Kaldır">
+                                            <i class="bi bi-star"></i> Çıxarılma ləğv
+                                        </a>
+                                    <?php else: ?>
+                                        <a href="?promote=<?= $ad['id'] ?>" class="btn btn-sm btn-success ms-2" title="Öne Çıxar">
+                                            <i class="bi bi-star-fill"></i> Öne Çıxar
+                                        </a>
+                                    <?php endif; ?>
                                     <a href="?delete=<?= $ad['id'] ?>" onclick="return confirm('Bu elanı silmək istədiyinizə əminsiniz?')" class="btn btn-sm btn-danger">
                                         <i class="bi bi-trash"></i> Sil
                                     </a>

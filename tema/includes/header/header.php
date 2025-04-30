@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include_once __DIR__ . "/../../../tema/includes/config.php";
 
 // Site ayarlarını veritabanından al
@@ -51,10 +51,7 @@ $site_logo = '/' . ltrim($site['logo'] ?? 'assets/icon.png', '/');
                 </ul>
                 <!-- Sağ Butonlar -->
                 <div class="d-flex align-items-center gap-3">
-                    <a href="#" class="text-dark text-decoration-none d-flex align-items-center gap-1">
-                        <i class="bi bi-globe"></i> AZ
-                    </a>
-                    <a href="#" class="text-dark text-decoration-none d-flex align-items-center gap-1">
+                    <a href="/pages/profile/profileads.php" class="text-dark text-decoration-none d-flex align-items-center gap-1">
                         <i class="bi bi-plus-circle"></i> Elan
                     </a>
                     <div class="position-relative dropdown">

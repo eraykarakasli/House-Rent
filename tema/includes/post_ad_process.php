@@ -14,11 +14,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // ✅ Formdan gelen verileri güvenli bir şekilde al
     $title = trim($_POST['title'] ?? '');
     $category = $_POST['category'] ?? '';
+    $operation_type = $_POST['operation_type'] ?? '';
+    $building_condition = $_POST['building_condition'] ?? '';
     $area = (int) ($_POST['area'] ?? 0);
     $land_area = isset($_POST['land_area']) ? (int) $_POST['land_area'] : null;
-    $certificate = isset($_POST['certificate']) ? (int) $_POST['certificate'] : 0; // 🔥 BOOLEAN olarak al
-    $mortgage = isset($_POST['mortgage']) ? (int) $_POST['mortgage'] : 0; // 🔥 BOOLEAN olarak al
-    $renovated = isset($_POST['renovated']) ? (int) $_POST['renovated'] : 0; // 🔥 BOOLEAN olarak al
+    $certificate = isset($_POST['certificate']) ? (int) $_POST['certificate'] : 0;
+    $mortgage = isset($_POST['mortgage']) ? (int) $_POST['mortgage'] : 0;
+    $renovated = isset($_POST['renovated']) ? (int) $_POST['renovated'] : 0;
     $floor = $_POST['floor'] ?? '';
     $room_count = (int) ($_POST['room_count'] ?? 0);
     $price = (int) ($_POST['price'] ?? 0);
@@ -27,8 +29,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $latitude = $_POST['latitude'] ?? '';
     $longitude = $_POST['longitude'] ?? '';
     $features = isset($_POST['features']) ? json_encode($_POST['features'], JSON_UNESCAPED_UNICODE) : json_encode([], JSON_UNESCAPED_UNICODE);
+    $city = $_POST['city'] ?? '';
+    $district = $_POST['district'] ?? '';
+    $neighborhood = $_POST['neighborhood'] ?? '';
 
-    $status = 'pending'; // Admin onayı bekleniyor
+    $status = 'pending';
 
     // ✅ Resim yükleme işlemi
     $image_paths = [];
@@ -44,30 +49,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $target_path = $upload_dir . $filename;
 
             if (move_uploaded_file($tmp_name, $target_path)) {
-                $image_paths[] = 'assets/uploads/ads/' . $filename; // Göreli yol veritabanı için
+                $image_paths[] = 'assets/uploads/ads/' . $filename;
             }
         }
     }
 
     try {
-        // ✅ Veritabanına kayıt — DİKKAT: Şimdi mortgage ve renovated da INSERT ediliyor 🔥
-        $stmt = $baglanti->prepare("INSERT INTO ads (user_id, title, category, area, land_area, certificate, mortgage, renovated, floor, room_count, price, description, address, latitude, longitude, features, images, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $baglanti->prepare("INSERT INTO ads (user_id, title, category, operation_type, building_condition, area, land_area, certificate, mortgage, renovated, floor, room_count, price, description, city, district, neighborhood, address, latitude, longitude, features, images, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute([
-            $user_id, $title, $category, $area, $land_area, $certificate,
-            $mortgage, $renovated, // 🔥 BURADA EKLENDİ
-            $floor, $room_count, $price, $description, $address,
-            $latitude, $longitude, $features, json_encode($image_paths), $status
+            $user_id, $title, $category, $operation_type, $building_condition,
+            $area, $land_area, $certificate, $mortgage, $renovated,
+            $floor, $room_count, $price, $description,
+            $city, $district, $neighborhood,
+            $address, $latitude, $longitude,
+            $features, json_encode($image_paths), $status
         ]);
 
-        // ✅ Başarıyla yönlendir
         header("Location: /pages/profile/profileads.php?status=created");
         exit;
-
     } catch (PDOException $e) {
         echo "Xəta baş verdi: " . $e->getMessage();
     }
 } else {
-    // Geçersiz istekse anasayfaya
     header("Location: /");
     exit;
 }

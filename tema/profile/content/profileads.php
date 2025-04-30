@@ -53,42 +53,42 @@ $ads = $stmt->fetchAll(PDO::FETCH_ASSOC);
             ?>
             <div class="col">
                 <div class="card h-100 position-relative shadow-sm border-0 rounded-4 overflow-hidden">
-                    <img src="<?= htmlspecialchars($imagePath) ?>" class="d-block w-100" style="height: 200px; object-fit: cover;" alt="İlan Foto">
+                    <a href="/pages/adsdetail/adsdetail.php?id=<?= $ad['id'] ?>" class="text-decoration-none text-dark">
+                        <img src="<?= htmlspecialchars($imagePath) ?>" class="d-block w-100" style="height: 200px; object-fit: cover;" alt="İlan Foto">
 
-                    <div class="p-3">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <strong class="fs-6"><?= number_format($ad['price'], 0, ',', ' ') ?> AZN</strong>
-                            <span class="badge <?= $ad['status'] ? 'bg-success' : 'bg-secondary' ?>">
-                                <?= $ad['status'] ? 'Aktiv' : 'Gizli' ?>
-                            </span>
+                        <div class="p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <strong class="fs-6"><?= number_format($ad['price'], 0, ',', ' ') ?> AZN</strong>
+                                <span class="badge <?= $ad['status'] ? 'bg-success' : 'bg-secondary' ?>">
+                                    <?= $ad['status'] ? 'Aktiv' : 'Gizli' ?>
+                                </span>
+                            </div>
+                            <div class="mb-2 text-secondary d-flex align-items-center">
+                                <i class="bi bi-geo-alt me-1"></i> <span><?= htmlspecialchars($ad['address']) ?></span>
+                            </div>
+                            <div class="d-flex justify-content-between text-secondary mb-3">
+                                <div><i class="bi bi-building me-1"></i> <?= $ad['floor'] ?></div>
+                                <div><i class="bi bi-door-open me-1"></i> <?= $ad['room_count'] ?> otaq</div>
+                                <div><i class="bi bi-aspect-ratio me-1"></i> <?= $ad['area'] ?>m²</div>
+                            </div>
                         </div>
-                        <div class="mb-2 text-secondary d-flex align-items-center">
-                            <i class="bi bi-geo-alt me-1"></i> <span><?= htmlspecialchars($ad['address']) ?></span>
-                        </div>
-                        <div class="d-flex justify-content-between text-secondary mb-3">
-                            <div><i class="bi bi-building me-1"></i> <?= $ad['floor'] ?></div>
-                            <div><i class="bi bi-door-open me-1"></i> <?= $ad['room_count'] ?> otaq</div>
-                            <div><i class="bi bi-aspect-ratio me-1"></i> <?= $ad['area'] ?>m²</div>
-                        </div>
+                    </a>
 
-                        <div class="d-flex justify-content-between">
-                            <a href="/pages/profile/profileads.php?page=edit&id=<?= $ad['id'] ?>" class="btn btn-sm btn-outline-primary rounded-pill">
-                                <i class="bi bi-pencil-square me-1"></i> Düzəlt
-                            </a>
-
-
-
-                            <a href="/tema/includes/ad_delete.php?id=<?= $ad['id'] ?>"
-                                onclick="return confirm('Elanı silmək istədiyinizə əminsiniz?')"
-                                class="btn btn-sm btn-outline-danger rounded-pill">
-                                <i class="bi bi-trash me-1"></i> Sil
-                            </a>
-
-
-                        </div>
+                    <!-- Butonlar sadece kart altında yer alır, linkin dışında -->
+                    <div class="px-3 pb-3 d-flex justify-content-between">
+                        <a href="/pages/profile/profileads.php?page=edit&id=<?= $ad['id'] ?>" class="btn btn-sm btn-outline-primary rounded-pill">
+                            <i class="bi bi-pencil-square me-1"></i> Düzəlt
+                        </a>
+                        <a href="/tema/includes/ad_delete.php?id=<?= $ad['id'] ?>"
+                            onclick="return confirm('Elanı silmək istədiyinizə əminsiniz?')"
+                            class="btn btn-sm btn-outline-danger rounded-pill">
+                            <i class="bi bi-trash me-1"></i> Sil
+                        </a>
                     </div>
                 </div>
             </div>
+
+
         <?php endforeach; ?>
     </div>
 </div>

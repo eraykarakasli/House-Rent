@@ -1,365 +1,138 @@
-<div class="container my-5">
-    <div class="d-flex gap-2 align-items-center mb-3">
-        <h4 class="fw-bold">Günlük evlər</h4>
-        <a href="#" class="btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center"
-            style="width: 40px; height: 40px;">
-            <i class="bi bi-arrow-right"></i>
-        </a>
-    </div>
-    <div class="position-relative">
-        <!-- Slider -->
-        <div class="d-flex flex-nowrap overflow-auto gap-3 pb-3 px-2" id="ilanSlider3" style="scroll-behavior: smooth;">
-            <!-- Kart örneği -->
-            <div class="card position-relative shadow-sm border-0" style="width: 280px; border-radius: 12px; overflow: hidden;">
-                <div class="position-relative">
-                    <div id="carouselGunluk2" class="carousel slide" data-bs-ride="false">
-                        <div class="carousel-inner rounded" style="height: 180px;">
-                            <div class="carousel-item active">
-                                <img src="assets\evresim4.webp" class="d-block w-100" alt="..." style="height: 180px; object-fit: cover;">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="assets/evresim2.webp" class="d-block w-100" alt="..." style="height: 180px; object-fit: cover;">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="assets/evresim3.webp" class="d-block w-100" alt="..." style="height: 180px; object-fit: cover;">
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselGunluk2" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" style="filter: invert(1);" aria-hidden="true"></span>
-                            <span class="visually-hidden">Önceki</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselGunluk2" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" style="filter: invert(1);" aria-hidden="true"></span>
-                            <span class="visually-hidden">Sonraki</span>
-                        </button>
-                    </div>
-                    <button class="btn btn-light btn-sm rounded-circle position-absolute top-0 end-0 m-2">
-                        <i class="bi bi-heart"></i>
-                    </button>
-                    <div class="position-absolute top-0 start-0 m-2">
-                        <!-- Çıxarış var -->
-                        <span class="btn btn-success btn-sm rounded-circle  text-center">
-                            <i class="bi bi-clipboard-check-fill"></i>
-                        </span>
-                        <!-- İpoteka var -->
-                        <span class="btn btn-warning btn-sm rounded-circle  text-center">
-                            <i class="bi bi-percent"></i>
-                        </span>
-                        <!-- Təmirli -->
-                        <span class="btn btn-danger btn-sm rounded-circle text-center">
-                            <i class="bi bi-hammer"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h6 class="fw-bold">335,000 AZN</h6>
-                    <p class="text-muted mb-1"><i class="bi bi-geo-alt me-1"></i>8 Noyabr</p>
-                    <p class="text-muted mb-1"><i class="bi bi-building me-1"></i>3 otaq</p>
-                    <p class="text-muted"><i class="bi bi-arrows-fullscreen me-1"></i>145m²</p>
-                </div>
-            </div>
-            <!-- Kart örneği -->
-            <div class="card position-relative shadow-sm border-0" style="width: 280px; border-radius: 12px; overflow: hidden;">
-                <div class="position-relative">
-                    <div id="carouselGunluk2" class="carousel slide" data-bs-ride="false">
-                        <div class="carousel-inner rounded" style="height: 180px;">
-                            <div class="carousel-item active">
-                                <img src="assets\evresim4.webp" class="d-block w-100" alt="..." style="height: 180px; object-fit: cover;">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="assets/evresim2.webp" class="d-block w-100" alt="..." style="height: 180px; object-fit: cover;">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="assets/evresim3.webp" class="d-block w-100" alt="..." style="height: 180px; object-fit: cover;">
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselGunluk2" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" style="filter: invert(1);" aria-hidden="true"></span>
-                            <span class="visually-hidden">Önceki</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselGunluk2" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" style="filter: invert(1);" aria-hidden="true"></span>
-                            <span class="visually-hidden">Sonraki</span>
-                        </button>
-                    </div>
-                    <button class="btn btn-light btn-sm rounded-circle position-absolute top-0 end-0 m-2">
-                        <i class="bi bi-heart"></i>
-                    </button>
-                    <div class="position-absolute top-0 start-0 m-2">
-                        <!-- Çıxarış var -->
-                        <span class="btn btn-success btn-sm rounded-circle  text-center">
-                            <i class="bi bi-clipboard-check-fill"></i>
-                        </span>
-                        <!-- İpoteka var -->
-                        <span class="btn btn-warning btn-sm rounded-circle  text-center">
-                            <i class="bi bi-percent"></i>
-                        </span>
-                        <!-- Təmirli -->
-                        <span class="btn btn-danger btn-sm rounded-circle text-center">
-                            <i class="bi bi-hammer"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h6 class="fw-bold">335,000 AZN</h6>
-                    <p class="text-muted mb-1"><i class="bi bi-geo-alt me-1"></i>8 Noyabr</p>
-                    <p class="text-muted mb-1"><i class="bi bi-building me-1"></i>3 otaq</p>
-                    <p class="text-muted"><i class="bi bi-arrows-fullscreen me-1"></i>145m²</p>
-                </div>
-            </div>
-            <!-- Kart örneği -->
-            <div class="card position-relative shadow-sm border-0" style="width: 280px; border-radius: 12px; overflow: hidden;">
-                <div class="position-relative">
-                    <div id="carouselGunluk2" class="carousel slide" data-bs-ride="false">
-                        <div class="carousel-inner rounded" style="height: 180px;">
-                            <div class="carousel-item active">
-                                <img src="assets\evresim4.webp" class="d-block w-100" alt="..." style="height: 180px; object-fit: cover;">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="assets/evresim2.webp" class="d-block w-100" alt="..." style="height: 180px; object-fit: cover;">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="assets/evresim3.webp" class="d-block w-100" alt="..." style="height: 180px; object-fit: cover;">
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselGunluk2" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" style="filter: invert(1);" aria-hidden="true"></span>
-                            <span class="visually-hidden">Önceki</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselGunluk2" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" style="filter: invert(1);" aria-hidden="true"></span>
-                            <span class="visually-hidden">Sonraki</span>
-                        </button>
-                    </div>
-                    <button class="btn btn-light btn-sm rounded-circle position-absolute top-0 end-0 m-2">
-                        <i class="bi bi-heart"></i>
-                    </button>
-                    <div class="position-absolute top-0 start-0 m-2">
-                        <!-- Çıxarış var -->
-                        <span class="btn btn-success btn-sm rounded-circle  text-center">
-                            <i class="bi bi-clipboard-check-fill"></i>
-                        </span>
-                        <!-- İpoteka var -->
-                        <span class="btn btn-warning btn-sm rounded-circle  text-center">
-                            <i class="bi bi-percent"></i>
-                        </span>
-                        <!-- Təmirli -->
-                        <span class="btn btn-danger btn-sm rounded-circle text-center">
-                            <i class="bi bi-hammer"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h6 class="fw-bold">335,000 AZN</h6>
-                    <p class="text-muted mb-1"><i class="bi bi-geo-alt me-1"></i>8 Noyabr</p>
-                    <p class="text-muted mb-1"><i class="bi bi-building me-1"></i>3 otaq</p>
-                    <p class="text-muted"><i class="bi bi-arrows-fullscreen me-1"></i>145m²</p>
-                </div>
-            </div>
-            <!-- Kart örneği -->
-            <div class="card position-relative shadow-sm border-0" style="width: 280px; border-radius: 12px; overflow: hidden;">
-                <div class="position-relative">
-                    <div id="carouselGunluk2" class="carousel slide" data-bs-ride="false">
-                        <div class="carousel-inner rounded" style="height: 180px;">
-                            <div class="carousel-item active">
-                                <img src="assets\evresim4.webp" class="d-block w-100" alt="..." style="height: 180px; object-fit: cover;">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="assets/evresim2.webp" class="d-block w-100" alt="..." style="height: 180px; object-fit: cover;">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="assets/evresim3.webp" class="d-block w-100" alt="..." style="height: 180px; object-fit: cover;">
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselGunluk2" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" style="filter: invert(1);" aria-hidden="true"></span>
-                            <span class="visually-hidden">Önceki</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselGunluk2" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" style="filter: invert(1);" aria-hidden="true"></span>
-                            <span class="visually-hidden">Sonraki</span>
-                        </button>
-                    </div>
-                    <button class="btn btn-light btn-sm rounded-circle position-absolute top-0 end-0 m-2">
-                        <i class="bi bi-heart"></i>
-                    </button>
-                    <div class="position-absolute top-0 start-0 m-2">
-                        <!-- Çıxarış var -->
-                        <span class="btn btn-success btn-sm rounded-circle  text-center">
-                            <i class="bi bi-clipboard-check-fill"></i>
-                        </span>
-                        <!-- İpoteka var -->
-                        <span class="btn btn-warning btn-sm rounded-circle  text-center">
-                            <i class="bi bi-percent"></i>
-                        </span>
-                        <!-- Təmirli -->
-                        <span class="btn btn-danger btn-sm rounded-circle text-center">
-                            <i class="bi bi-hammer"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h6 class="fw-bold">335,000 AZN</h6>
-                    <p class="text-muted mb-1"><i class="bi bi-geo-alt me-1"></i>8 Noyabr</p>
-                    <p class="text-muted mb-1"><i class="bi bi-building me-1"></i>3 otaq</p>
-                    <p class="text-muted"><i class="bi bi-arrows-fullscreen me-1"></i>145m²</p>
-                </div>
-            </div>
-            <!-- Kart örneği -->
-            <div class="card position-relative shadow-sm border-0" style="width: 280px; border-radius: 12px; overflow: hidden;">
-                <div class="position-relative">
-                    <div id="carouselGunluk2" class="carousel slide" data-bs-ride="false">
-                        <div class="carousel-inner rounded" style="height: 180px;">
-                            <div class="carousel-item active">
-                                <img src="assets\evresim4.webp" class="d-block w-100" alt="..." style="height: 180px; object-fit: cover;">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="assets/evresim2.webp" class="d-block w-100" alt="..." style="height: 180px; object-fit: cover;">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="assets/evresim3.webp" class="d-block w-100" alt="..." style="height: 180px; object-fit: cover;">
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselGunluk2" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" style="filter: invert(1);" aria-hidden="true"></span>
-                            <span class="visually-hidden">Önceki</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselGunluk2" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" style="filter: invert(1);" aria-hidden="true"></span>
-                            <span class="visually-hidden">Sonraki</span>
-                        </button>
-                    </div>
-                    <button class="btn btn-light btn-sm rounded-circle position-absolute top-0 end-0 m-2">
-                        <i class="bi bi-heart"></i>
-                    </button>
-                    <div class="position-absolute top-0 start-0 m-2">
-                        <!-- Çıxarış var -->
-                        <span class="btn btn-success btn-sm rounded-circle  text-center">
-                            <i class="bi bi-clipboard-check-fill"></i>
-                        </span>
-                        <!-- İpoteka var -->
-                        <span class="btn btn-warning btn-sm rounded-circle  text-center">
-                            <i class="bi bi-percent"></i>
-                        </span>
-                        <!-- Təmirli -->
-                        <span class="btn btn-danger btn-sm rounded-circle text-center">
-                            <i class="bi bi-hammer"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h6 class="fw-bold">335,000 AZN</h6>
-                    <p class="text-muted mb-1"><i class="bi bi-geo-alt me-1"></i>8 Noyabr</p>
-                    <p class="text-muted mb-1"><i class="bi bi-building me-1"></i>3 otaq</p>
-                    <p class="text-muted"><i class="bi bi-arrows-fullscreen me-1"></i>145m²</p>
-                </div>
-            </div>
-            <!-- Kart örneği -->
-            <div class="card position-relative shadow-sm border-0" style="width: 280px; border-radius: 12px; overflow: hidden;">
-                <div class="position-relative">
-                    <div id="carouselGunluk2" class="carousel slide" data-bs-ride="false">
-                        <div class="carousel-inner rounded" style="height: 180px;">
-                            <div class="carousel-item active">
-                                <img src="assets\evresim4.webp" class="d-block w-100" alt="..." style="height: 180px; object-fit: cover;">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="assets/evresim2.webp" class="d-block w-100" alt="..." style="height: 180px; object-fit: cover;">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="assets/evresim3.webp" class="d-block w-100" alt="..." style="height: 180px; object-fit: cover;">
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselGunluk2" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" style="filter: invert(1);" aria-hidden="true"></span>
-                            <span class="visually-hidden">Önceki</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselGunluk2" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" style="filter: invert(1);" aria-hidden="true"></span>
-                            <span class="visually-hidden">Sonraki</span>
-                        </button>
-                    </div>
-                    <button class="btn btn-light btn-sm rounded-circle position-absolute top-0 end-0 m-2">
-                        <i class="bi bi-heart"></i>
-                    </button>
-                    <div class="position-absolute top-0 start-0 m-2">
-                        <!-- Çıxarış var -->
-                        <span class="btn btn-success btn-sm rounded-circle  text-center">
-                            <i class="bi bi-clipboard-check-fill"></i>
-                        </span>
-                        <!-- İpoteka var -->
-                        <span class="btn btn-warning btn-sm rounded-circle  text-center">
-                            <i class="bi bi-percent"></i>
-                        </span>
-                        <!-- Təmirli -->
-                        <span class="btn btn-danger btn-sm rounded-circle text-center">
-                            <i class="bi bi-hammer"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h6 class="fw-bold">335,000 AZN</h6>
-                    <p class="text-muted mb-1"><i class="bi bi-geo-alt me-1"></i>8 Noyabr</p>
-                    <p class="text-muted mb-1"><i class="bi bi-building me-1"></i>3 otaq</p>
-                    <p class="text-muted"><i class="bi bi-arrows-fullscreen me-1"></i>145m²</p>
-                </div>
-            </div>
-            
-            
-            <!-- Diğer kartlar aynı yapıda çoğaltılabilir -->
-        </div>
+<?php
 
-        <!-- Navigasyon okları -->
-        <button class="btn btn-light position-absolute top-50 start-0 translate-middle-y shadow rounded-circle" onclick="scrollSlider3(-1)">
-            <i class="bi bi-chevron-left"></i>
-        </button>
-        <button class="btn btn-light position-absolute top-50 end-0 translate-middle-y shadow rounded-circle" onclick="scrollSlider3(1)">
-            <i class="bi bi-chevron-right"></i>
-        </button>
+
+// Kullanıcının favorileri
+$userFavorites = [];
+if (isset($_SESSION['user_id'])) {
+    $stmt = $baglanti->prepare("SELECT favorites FROM users WHERE id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($user && !empty($user['favorites'])) {
+        $userFavorites = json_decode($user['favorites'], true);
+    }
+}
+
+$categories = [
+    'obyekt' => 'Obyekt',
+    'ofis' => 'Ofis',
+    'qaraj' => 'Qaraj',
+    'torpaq' => 'Torpaq',
+    'menzil' => 'Menzil',
+    'heyet' => 'Həyət evi / Bağ evi'
+];
+
+foreach ($categories as $catKey => $catName):
+    $stmt = $baglanti->prepare("SELECT * FROM ads WHERE category = ? AND status = 1 AND is_promoted = 1 ORDER BY created_at DESC LIMIT 10");
+    $stmt->execute([$catKey]);
+    $ads = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if (empty($ads)) continue;
+?>
+    <div class="container my-5">
+        <div class="d-flex gap-2 align-items-center mb-3">
+            <h4 class="fw-bold"><?= $catName ?> Elanları</h4>
+        </div>
+        <div class="position-relative">
+            <div class="d-flex flex-nowrap overflow-auto gap-3 pb-3 px-2 slider-scroll" id="slider-<?= $catKey ?>" style="scroll-behavior: smooth;">
+                <?php foreach ($ads as $ad): ?>
+                    <?php
+                    $images = json_decode($ad['images'], true);
+                    $firstImage = !empty($images) ? "../../tema/" . ltrim($images[0], '/') : "../../assets/no-image.webp";
+                    ?>
+                    <div onclick="window.location.href='../../pages/adsdetail/adsdetail.php?id=<?= $ad['id'] ?>'" class="text-decoration-none text-dark" style="cursor:pointer; width: 250px; flex: 0 0 auto;">
+                        <div class="card h-100 position-relative shadow-sm border-0 rounded-4 overflow-hidden w-100">
+                            <div class="position-relative" style="height: 180px;">
+                                <img src="<?= htmlspecialchars($firstImage) ?>" class="d-block w-100" alt="İlan Fotoğrafı" style="height: 180px; object-fit: cover;">
+                                <a href="#" class="btn btn-light btn-sm rounded-circle position-absolute top-0 end-0 m-2 " onclick="toggleFavorite(event, <?= $ad['id'] ?>)">
+                                    <i class="bi <?= in_array((int)$ad['id'], $userFavorites) ? 'bi-heart-fill text-danger' : 'bi-heart' ?>"></i>
+                                </a>
+                                <div class="position-absolute top-0 start-0 m-2">
+                                    <?php if (!empty($ad['certificate']) && $ad['certificate'] == 1): ?>
+                                        <span class="btn btn-success btn-sm rounded-circle " title="Çıxarış var">
+                                            <i class="bi bi-clipboard-check-fill"></i>
+                                        </span>
+                                    <?php endif; ?>
+                                    <?php if (!empty($ad['mortgage']) && $ad['mortgage'] == 1): ?>
+                                        <span class="btn btn-warning btn-sm rounded-circle " title="İpoteka var">
+                                            <i class="bi bi-percent"></i>
+                                        </span>
+                                    <?php endif; ?>
+                                    <?php if (!empty($ad['renovated']) && $ad['renovated'] == 1): ?>
+                                        <span class="btn btn-danger btn-sm rounded-circle " title="Təmirli">
+                                            <i class="bi bi-hammer"></i>
+                                        </span>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <div class="p-2">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <strong class="fs-6"><?= htmlspecialchars(number_format($ad['price'], 0, ',', ' ')) ?> AZN</strong>
+                                    <small class="text-muted" style="font-size: 12px;">
+                                        <?= date("d.m.Y", strtotime($ad['created_at'])) ?>
+                                    </small>
+                                </div>
+                                <div class="mb-2 text-secondary d-flex align-items-center py-2">
+                                    <i class="bi bi-geo-alt me-1"></i>
+                                    <span><?= htmlspecialchars($ad['address']) ?></span>
+                                </div>
+                                <div class="d-flex justify-content-between text-secondary mt-2">
+                                    <div class="d-flex align-items-center flex-fill">
+                                        <i class="bi bi-building me-1"></i>
+                                        <span><?= htmlspecialchars($ad['floor']) ?></span>
+                                    </div>
+                                    <div class="d-flex align-items-center flex-fill">
+                                        <i class="bi bi-door-open me-1"></i>
+                                        <span><?= htmlspecialchars($ad['room_count']) ?> otaq</span>
+                                    </div>
+                                    <div class="d-flex align-items-center flex-fill">
+                                        <i class="bi bi-aspect-ratio me-1"></i>
+                                        <span><?= htmlspecialchars($ad['area']) ?>m²</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <button class="btn btn-light position-absolute top-50 start-0 translate-middle-y shadow rounded-circle" onclick="scrollSlider('slider-<?= $catKey ?>', -1)">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            <button class="btn btn-light position-absolute top-50 end-0 translate-middle-y shadow rounded-circle" onclick="scrollSlider('slider-<?= $catKey ?>', 1)">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
+        <div class="w-100 text-center mt-3">
+            <a href="/pages/ads/ads.php?category=<?= $catKey ?>" class="btn btn-dark btn-sm p-2 fs-6 rounded-3">Bütün <?= $catName ?> elanları</a>
+        </div>
     </div>
-    <div class="w-100 text-center">
-        <a href="#" class="btn btn-dark btn-sm p-2 fs-6 rounded-3">Bütün günlük evlər</a>
-    </div>
-</div>
+<?php endforeach; ?>
 
 <script>
-    function scrollSlider3(direction) {
-        const slider = document.getElementById('ilanSlider3');
-        const scrollAmount = 320; 
+    function scrollSlider(id, direction) {
+        const slider = document.getElementById(id);
+        const scrollAmount = 320;
         slider.scrollBy({
             left: direction * scrollAmount,
             behavior: 'smooth'
         });
     }
+
+    function toggleFavorite(e, adId) {
+        e.preventDefault();
+        e.stopPropagation();
+        fetch('../../tema/includes/add_fav.php?id=' + adId)
+            .then(() => location.reload());
+    }
 </script>
-
 <style>
-    #ilanSlider3 {
-        scroll-behavior: smooth;
+    .slider-scroll {
+        scrollbar-width: none;
+        /* Firefox */
+        -ms-overflow-style: none;
+        /* IE 10+ */
     }
 
-    #ilanSlider3::-webkit-scrollbar {
+    .slider-scroll::-webkit-scrollbar {
         display: none;
-    }
-
-    .card {
-        flex: 0 0 auto;
-        /* Her kartın genişliği sabit kalsın */
-        width: 280px;
-        border-radius: 12px;
-        overflow: hidden;
-    }
-
-    .card:hover {
-        transform: scale(1.02);
-        transition: all 0.3s ease;
-    }
-
-    .btn-heart {
-        background: white;
-        border: none;
-    }
-
-    .btn.rounded-circle {
-        z-index: 10;
+        /* Chrome, Safari, Opera */
     }
 </style>

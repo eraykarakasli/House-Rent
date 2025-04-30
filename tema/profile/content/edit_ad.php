@@ -56,6 +56,21 @@ $images = json_decode($ad['images'], true);
                     </select>
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label">Əməliyyat növü</label>
+                    <select class="form-select rounded-3" name="operation_type" required>
+                        <option value="satilik" <?= $ad['operation_type'] === 'satilik' ? 'selected' : '' ?>>Satılıq</option>
+                        <option value="kiraye" <?= $ad['operation_type'] === 'kiraye' ? 'selected' : '' ?>>Kirayə</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Bina vəziyyəti</label>
+                    <select class="form-select rounded-3" name="building_condition" required>
+                        <option value="yeni" <?= $ad['building_condition'] === 'yeni' ? 'selected' : '' ?>>Yeni</option>
+                        <option value="ikincil" <?= $ad['building_condition'] === 'ikincil' ? 'selected' : '' ?>>İkincil</option>
+                    </select>
+                </div>
 
                 <div class="mb-3">
                     <label class="form-label">Sahə (m²)</label>
@@ -152,6 +167,22 @@ $images = json_decode($ad['images'], true);
             <div id="step3" class="step">
                 <h4 class="fw-semibold mb-4">3. Xüsusiyyətlər, Konum, Adres</h4>
 
+                <div class="mb-3">
+                    <label class="form-label">Ünvan</label>
+                    <input type="text" class="form-control rounded-3" name="address" value="<?= htmlspecialchars($ad['address']) ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Şəhər</label>
+                    <input type="text" class="form-control rounded-3" name="city" value="<?= htmlspecialchars($ad['city']) ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Rayon / İlçe</label>
+                    <input type="text" class="form-control rounded-3" name="district" value="<?= htmlspecialchars($ad['district']) ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Məhəllə</label>
+                    <input type="text" class="form-control rounded-3" name="neighborhood" value="<?= htmlspecialchars($ad['neighborhood']) ?>" required>
+                </div>
                 <div class="mb-4">
                     <label class="form-label">Xüsusiyyətlər</label>
                     <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-2">
@@ -166,10 +197,7 @@ $images = json_decode($ad['images'], true);
                     </div>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Ünvan</label>
-                    <input type="text" class="form-control rounded-3" name="address" value="<?= htmlspecialchars($ad['address']) ?>" required>
-                </div>
+
 
                 <div class="mb-4">
                     <label class="form-label">Xəritədən konum seçin</label>
