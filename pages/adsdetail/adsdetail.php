@@ -17,7 +17,13 @@ if (!$ad) {
     exit;
 }
 
-// Görüntülenmeyi artır
+$operationText = match(strtolower($ad['operation_type'])) {
+    'kiraye', 'kira' => 'Kirayə',
+    'satiliq', 'satış' => 'Satılıq',
+    default => '—'
+};
+
+
 $updateView = $baglanti->prepare("UPDATE ads SET view_count = view_count + 1 WHERE id = ?");
 $updateView->execute([$id]);
 
@@ -31,22 +37,28 @@ $images = json_decode($ad['images'], true) ?? [];
 <div class="container">
     <div class="row gap-5 pb-5">
         <div class="col-12">
-            <h4 class="fw-bold mb-4"><?= htmlspecialchars($ad['title']) ?></h4>
+            <h4 class="fw-bold mb-4">
+                <?= htmlspecialchars($ad['title']) ?>
+                <?php if ($ad['is_promoted']): ?>
+                    <i class="bi bi-star-fill text-warning fs-5 ms-2" title="Öne Çıkarılan Elan"></i>
+                <?php endif; ?>
+            </h4>
 
             <div class="d-flex gap-2 mb-4" style="height: 400px;">
                 <div class="w-50">
-                    <img src="../../tema/<?= htmlspecialchars($images[0] ?? 'assets/no-image.webp') ?>" class="cursor-pointer img-fluid rounded w-100 h-100 object-fit-cover gallery-img" data-bs-toggle="modal" data-bs-target="#galleryModal" data-index="0" alt="Ana Görsel" style="cursor: pointer;">
+                    <img src="../../tema/<?= htmlspecialchars($images[0] ?? 'assets/no-image.webp') ?>" class="cursor-pointer img-fluid rounded w-100 h-100 object-fit-cover gallery-img" data-bs-toggle="modal" data-bs-target="#galleryModal" data-index="0" alt="Ana Görsel">
                 </div>
                 <div class="w-50 d-flex flex-wrap gap-2">
                     <?php for ($i = 1; $i < min(5, count($images)); $i++): ?>
                         <div class="position-relative" style="width: calc(50% - 4px); height: 49%;">
-                            <img src="../../tema/<?= htmlspecialchars($images[$i]) ?>" class="img-fluid rounded w-100 h-100 object-fit-cover gallery-img" data-bs-toggle="modal" data-bs-target="#galleryModal" data-index="<?= $i ?>" alt="Görsel <?= $i + 1 ?>" style="cursor: pointer;">
+                            <img src="../../tema/<?= htmlspecialchars($images[$i]) ?>" class="img-fluid rounded w-100 h-100 object-fit-cover gallery-img" data-bs-toggle="modal" data-bs-target="#galleryModal" data-index="<?= $i ?>" alt="Görsel <?= $i + 1 ?>">
                         </div>
                     <?php endfor; ?>
                 </div>
             </div>
         </div>
 
+        <!-- Modal -->
         <div class="modal fade" id="galleryModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-fullscreen m-0 w-100">
                 <div class="modal-content bg-black border-0 w-100">
@@ -63,12 +75,10 @@ $images = json_decode($ad['images'], true) ?? [];
                                 <?php endforeach; ?>
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#modalCarousel" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
+                                <span class="carousel-control-prev-icon"></span>
                             </button>
                             <button class="carousel-control-next" type="button" data-bs-target="#modalCarousel" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
+                                <span class="carousel-control-next-icon"></span>
                             </button>
                         </div>
                     </div>
@@ -76,16 +86,33 @@ $images = json_decode($ad['images'], true) ?? [];
             </div>
         </div>
 
+        <!-- Detaylar -->
         <div class="row">
             <div class="col-lg-8">
-                <div class="row text-center py-3 mb-4">
+                <div class="row row-cols-1 row-cols-md-4 text-center py-3 mb-4 g-3">
                     <div class="col">
                         <div class="text-muted">Kateqoriya</div>
                         <strong><i class="bi bi-grid"></i> <?= htmlspecialchars($ad['category']) ?></strong>
                     </div>
                     <div class="col">
+                        <div class="text-muted">Əməliyyat növü</div>
+                        <strong><?= htmlspecialchars($operationText) ?></strong>
+                    </div>
+                    <div class="col">
                         <div class="text-muted">Sahə</div>
-                        <strong><i class="bi bi-aspect-ratio"></i> <?= htmlspecialchars($ad['area']) ?>m²</strong>
+                        <strong><i class="bi bi-aspect-ratio"></i> <?= htmlspecialchars($ad['area']) ?> m²</strong>
+                    </div>
+                    <div class="col">
+                        <div class="text-muted">Torpaq sahəsi</div>
+                        <strong><i class="bi bi-aspect-ratio-fill"></i> <?= htmlspecialchars($ad['land_area']) ?> m²</strong>
+                    </div>
+                    <div class="col">
+                        <div class="text-muted">Otaq sayı</div>
+                        <strong><i class="bi bi-door-closed"></i> <?= htmlspecialchars($ad['room_count']) ?></strong>
+                    </div>
+                    <div class="col">
+                        <div class="text-muted">Mərtəbə</div>
+                        <strong><i class="bi bi-building"></i> <?= htmlspecialchars($ad['floor']) ?></strong>
                     </div>
                     <div class="col">
                         <div class="text-muted">Çıxarış</div>
@@ -100,10 +127,27 @@ $images = json_decode($ad['images'], true) ?? [];
                 <h5 class="fw-bold">Elan haqqında</h5>
                 <p class="text-muted"><?= nl2br(htmlspecialchars($ad['description'])) ?></p>
 
-                <h6 class="fw-semibold mt-4">Ünvan:</h6>
-                <p class="text-muted"> <?= htmlspecialchars($ad['address']) ?> </p>
+                <?php
+                $features = json_decode($ad['features'], true);
+                if (!empty($features) && is_array($features)): ?>
+                    <h6 class="fw-semibold mt-4">Xüsusiyyətlər:</h6>
+                    <ul class="text-muted row row-cols-2 ps-3">
+                        <?php foreach ($features as $feature): ?>
+                            <li class="col"><?= htmlspecialchars($feature) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
 
-                <!-- Google Maps iframe -->
+                <h6 class="fw-semibold mt-4">Binanın vəziyyəti:</h6>
+                <p class="text-muted"><?= htmlspecialchars($ad['building_condition']) ?></p>
+
+                <h6 class="fw-semibold mt-4">Ünvan:</h6>
+                <p class="text-muted"><?= htmlspecialchars($ad['address']) ?></p>
+
+                <?php if ($ad['mortgage']): ?>
+                    <div class="alert alert-info"><i class="bi bi-info-circle"></i> Bu elan ipotekaya uyğundur.</div>
+                <?php endif; ?>
+
                 <div class="mt-4 rounded overflow-hidden">
                     <iframe src="https://maps.google.com/maps?q=<?= $ad['latitude'] ?>,<?= $ad['longitude'] ?>&z=15&output=embed" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen></iframe>
                 </div>
@@ -113,9 +157,7 @@ $images = json_decode($ad['images'], true) ?? [];
                 <div class="bg-white border rounded-4 p-4 mb-4">
                     <h4 class="fw-bold"><?= htmlspecialchars(number_format($ad['price'], 0, ',', ' ')) ?> AZN</h4>
                     <p class="text-muted"><?= number_format($ad['price'] / ($ad['area'] ?: 1), 0, ',', ' ') ?> AZN/m²</p>
-                    <button class="btn btn-dark w-100">
-                        <i class="bi bi-calculator"></i> İpoteka hesabla
-                    </button>
+                    <!-- <button class="btn btn-dark w-100"><i class="bi bi-calculator"></i> İpoteka hesabla</button> -->
                 </div>
 
                 <div class="bg-white border rounded-4 p-4 mb-4 text-center">
@@ -126,7 +168,6 @@ $images = json_decode($ad['images'], true) ?? [];
                         <a href="tel:<?= htmlspecialchars($user['phone']) ?>" class="btn btn-primary d-flex align-items-center gap-2 p-2">
                             <i class="bi bi-telephone"></i> Zəng et
                         </a>
-                        <!-- <button class="btn btn-outline-primary d-flex align-items-center gap-2 p-2"><i class="bi bi-chat-dots"></i> Mesaj yaz</button> -->
                     </div>
                 </div>
 
@@ -144,8 +185,6 @@ $images = json_decode($ad['images'], true) ?? [];
                         <i class="bi bi-flag"></i> Şikayət et
                     </button>
                 </div>
-
-
             </div>
         </div>
     </div>

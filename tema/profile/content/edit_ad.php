@@ -59,7 +59,7 @@ $images = json_decode($ad['images'], true);
                 <div class="mb-3">
                     <label class="form-label">Əməliyyat növü</label>
                     <select class="form-select rounded-3" name="operation_type" required>
-                        <option value="satilik" <?= $ad['operation_type'] === 'satilik' ? 'selected' : '' ?>>Satılıq</option>
+                        <option value="satiliq" <?= $ad['operation_type'] === 'satiliq' ? 'selected' : '' ?>>Satılıq</option>
                         <option value="kiraye" <?= $ad['operation_type'] === 'kiraye' ? 'selected' : '' ?>>Kirayə</option>
                     </select>
                 </div>

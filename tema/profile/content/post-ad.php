@@ -36,7 +36,7 @@
                     <label class="form-label">Əməliyyat növü</label>
                     <select class="form-select rounded-3" name="operation_type" required>
                         <option value="">Seçin...</option>
-                        <option value="satilik">Satılıq</option>
+                        <option value="satiliq">Satılıq</option>
                         <option value="kiraye">Kirayə</option>
                     </select>
                 </div>

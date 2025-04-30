@@ -112,7 +112,7 @@
                             <div class="col-6">
                                 <select class="form-select form-select-lg bg-secondary text-white border-0 rounded w-100" name="operation">
                                     <option value="" disabled <?= empty($_GET['operation']) ? 'selected' : '' ?>>Əməliyyat növü</option>
-                                    <option value="satilik" <?= ($_GET['operation'] ?? '') === 'satilik' ? 'selected' : '' ?>>Satılıq</option>
+                                    <option value="satiliq" <?= ($_GET['operation'] ?? '') === 'satiliq' ? 'selected' : '' ?>>Satılıq</option>
                                     <option value="kiraye" <?= ($_GET['operation'] ?? '') === 'kiraye' ? 'selected' : '' ?>>Kirayə</option>
                                 </select>
                             </div>
