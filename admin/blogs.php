@@ -4,17 +4,32 @@ include './includes/config.php';
 include './includes/header.php';
 include './includes/sidebar.php';
 
-// Blogları çek
-$blogs = $baglanti->query("SELECT * FROM blogs ORDER BY created_at DESC")->fetchAll(PDO::FETCH_ASSOC);
+$limit = 6;
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
+$totalStmt = $baglanti->query("SELECT COUNT(*) FROM blogs");
+$totalPages = ceil($totalStmt->fetchColumn() / $limit);
+
+$stmt = $baglanti->prepare("SELECT * FROM blogs ORDER BY created_at DESC LIMIT :limit OFFSET :offset");
+$stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+$stmt->execute();
+$blogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="container my-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
+    <div class="d-flex align-items-center">
+        <button class="btn btn-outline-dark d-lg-none me-3" id="toggleSidebar">
+            <i class="bi bi-list"></i>
+        </button>
         <h4 class="mb-0">Blog Yazıları</h4>
-        <a href="blog_create.php" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i> Yeni Blog Əlavə Et
-        </a>
     </div>
+    <a href="blog_create.php" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Yeni Blog Əlavə Et
+    </a>
+</div>
 
     <div class="row">
         <?php if (isset($_GET['status']) && $_GET['status'] == 'deleted'): ?>
@@ -32,21 +47,15 @@ $blogs = $baglanti->query("SELECT * FROM blogs ORDER BY created_at DESC")->fetch
             ?>
             <div class="col-md-4 mb-4">
                 <div class="card shadow-sm rounded-4 h-100 overflow-hidden position-relative border-0">
-
-                    <!-- Yayın durumu etiketi -->
                     <span class="badge position-absolute top-0 start-0 m-2 
                     <?= $blog['is_published'] ? 'bg-success' : 'bg-secondary' ?>">
                         <?= $blog['is_published'] ? 'Yayında' : 'Qaralama' ?>
                     </span>
-
-                    <!-- Görsel -->
                     <div style="height: 160px; overflow: hidden;">
                         <img src="<?= $imageExists ? $imagePath : '/assets/img/default.jpg' ?>"
                             class="w-100 h-100 object-fit-cover rounded-top"
                             alt="Blog şəkli">
                     </div>
-
-                    <!-- İçerik -->
                     <div class="card-body px-3 pt-3 pb-2">
                         <h6 class="card-title mb-1 fw-semibold"><?= htmlspecialchars($blog['title']) ?></h6>
                         <p class="text-muted small mb-0">
@@ -56,8 +65,6 @@ $blogs = $baglanti->query("SELECT * FROM blogs ORDER BY created_at DESC")->fetch
                             </span>
                         </p>
                     </div>
-
-                    <!-- Butonlar -->
                     <div class="card-footer bg-white border-0 d-flex justify-content-between px-3 pb-3">
                         <a href="blog_edit.php?id=<?= $blog['id'] ?>" class="btn btn-sm btn-warning rounded-pill px-3">
                             <i class="bi bi-pencil"></i> Düzəlt
@@ -71,6 +78,17 @@ $blogs = $baglanti->query("SELECT * FROM blogs ORDER BY created_at DESC")->fetch
         <?php endforeach; ?>
     </div>
 
+    <?php if ($totalPages > 1): ?>
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                        <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                    </li>
+                <?php endfor; ?>
+            </ul>
+        </nav>
+    <?php endif; ?>
 </div>
 
 <?php include './includes/footer.php'; ?>

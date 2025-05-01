@@ -59,8 +59,9 @@ $ads = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <div class="p-3">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <strong class="fs-6"><?= number_format($ad['price'], 0, ',', ' ') ?> AZN</strong>
-                                <span class="badge <?= $ad['status'] ? 'bg-success' : 'bg-secondary' ?>">
-                                    <?= $ad['status'] ? 'Aktiv' : 'Gizli' ?>
+                                <span class="badge <?= $ad['status'] ? 'bg-success' : 'bg-warning' ?>">
+                                    <?= $ad['status'] ? 'Yayındadır' : 'Təsdiq gözləyir' ?>
+
                                 </span>
                             </div>
                             <div class="mb-2 text-secondary d-flex align-items-center">

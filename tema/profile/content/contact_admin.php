@@ -1,7 +1,7 @@
 <div class="col-md-8 col-lg-9">
     <!-- Başlıq -->
     <div class="row shadow-sm border rounded-4 p-4 mb-4">
-        <h4 class="fw-semibold mb-0">İdarəçi ilə Əlaqə</h4>
+        <h4 class="fw-semibold mb-0">İdarəçi ilə əlaqə</h4>
     </div>
 
     <!-- Bildirişlər -->
@@ -11,7 +11,7 @@
         </div>
     <?php elseif (isset($_GET['error']) && $_GET['error'] == 1): ?>
         <div class="alert alert-danger rounded-4">
-            Zəhmət olmasa bütün sahələri doldurun!
+            Zəhmət olmasa bütün xanaları doldurun!
         </div>
     <?php endif; ?>
 
@@ -25,7 +25,7 @@
 
             <div class="mb-3">
                 <label for="message" class="form-label">Mesajınız</label>
-                <textarea class="form-control rounded-4" id="message" name="message" rows="6" placeholder="Mesajınızı buraya yazın..." required></textarea>
+                <textarea class="form-control rounded-4" id="message" name="message" rows="6" placeholder="Mesajınızı bura yazın..." required></textarea>
             </div>
 
             <div class="text-end">

@@ -1,14 +1,17 @@
 <?php
+session_name('user_session');  // Kullanıcı oturumunu yönetmek için özel session adı
+session_name('user_session');
 session_start();
 
-// Oturumu sıfırla
+// Sadece kullanıcı oturum verilerini sıfırla
 session_unset();
 session_destroy();
 
-// Çerezleri sil
+// Varsa kullanıcıya ait çerezleri de sil
 setcookie('user_id', '', time() - 3600, "/");
 setcookie('user_name', '', time() - 3600, "/");
 
-// Giriş sayfasına yönlendir
+// Kullanıcıyı giriş sayfasına yönlendir
 header("Location: /index.php");
 exit;
+?>

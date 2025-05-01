@@ -1,5 +1,6 @@
 <?php
 // ✅ Oturum kontrolü ve veritabanı bağlantısı
+session_name('user_session');
 session_start();
 include __DIR__ . '/config.php';
 

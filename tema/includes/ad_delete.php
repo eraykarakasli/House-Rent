@@ -1,4 +1,5 @@
 <?php
+session_name('user_session');
 session_start();
 include __DIR__ . "/config.php";
 include __DIR__ . "/session_check.php";

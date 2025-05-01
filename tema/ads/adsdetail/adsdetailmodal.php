@@ -1,34 +1,37 @@
-<div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-fullscreen m-0">
-    <div class="modal-content bg-white border-0 rounded-0">
-      <div class="modal-body p-4 position-relative overflow-auto" style="max-height: 100vh;">
-
-        <div class="container-fluid">
-          <div class="row g-4 justify-content-center">
-
-            <!-- Görseller -->
-            <div class="col-12 col-md-6 col-lg-4">
-              <img src="../../assets/evresim6.webp" class="img-fluid rounded shadow-sm" alt="Görsel 1">
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-              <img src="../../assets/evresim7.webp" class="img-fluid rounded shadow-sm" alt="Görsel 2">
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-              <img src="../../assets/evresim8.webp" class="img-fluid rounded shadow-sm" alt="Görsel 3">
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-              <img src="../../assets/evresim9.webp" class="img-fluid rounded shadow-sm" alt="Görsel 4">
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-              <img src="../../assets/evresim10.webp" class="img-fluid rounded shadow-sm" alt="Görsel 5">
-            </div>
-
+<div class="modal fade" id="galleryModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content bg-black border-0 d-flex align-items-center justify-content-center">
+      <div class="modal-body p-0">
+        <div id="modalCarousel" class="carousel slide w-100" data-bs-ride="false">
+          <div class="carousel-inner">
+            <?php foreach ($images as $index => $img): ?>
+              <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                <img src="../../tema/<?= htmlspecialchars($img) ?>" class="modal-carousel-img" alt="...">
+              </div>
+            <?php endforeach; ?>
           </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#modalCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#modalCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+          </button>
         </div>
-
-        <!-- Kapat Butonu -->
-        <button type="button" class="btn-close position-absolute top-0 end-0 m-4 " data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
     </div>
   </div>
 </div>
+
+<style>
+ .modal-carousel-img {
+    max-height: 90vh;
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #000;
+}
+
+</style>

@@ -328,10 +328,38 @@ $images = json_decode($ad['images'], true);
     });
 
     function goToStep(stepNumber) {
+        // Önce aktif adımı bul
+        const currentStep = document.querySelector(".step.active");
+
+        // Şu anki adımdaki input, select, textarea, radio'ları kontrol et
+        const inputs = currentStep.querySelectorAll("input, select, textarea");
+        let valid = true;
+
+        inputs.forEach(input => {
+            if (input.type === "radio") {
+                const name = input.name;
+                const checked = currentStep.querySelectorAll(`input[name="${name}"]:checked`).length;
+                if (checked === 0) {
+                    valid = false;
+                }
+            } else if (input.type !== "file") {
+                if (!input.value || input.value.trim() === "") {
+                    valid = false;
+                }
+            }
+        });
+
+        if (!valid) {
+            alert("Zəhmət olmasa bu addımdakı bütün tələb olunan sahələri doldurun.");
+            return; // Diğer stepe geçilmesin
+        }
+
+        // Eğer validse adımı değiştir
         const steps = document.querySelectorAll('.step');
         steps.forEach(step => step.classList.remove('active'));
         document.querySelector('#step' + stepNumber).classList.add('active');
 
+        // Harita adımına geçerken boyut güncelle
         if (stepNumber === 3 && typeof map !== 'undefined') {
             setTimeout(() => {
                 map.invalidateSize();

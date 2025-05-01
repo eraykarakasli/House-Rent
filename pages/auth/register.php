@@ -1,4 +1,5 @@
 <?php
+session_name('user_session');
 session_start();
 
 // Oturum varsa veya çerezle otomatik giriş yapılmışsa → anasayfaya yönlendir
@@ -9,7 +10,7 @@ if (isset($_SESSION['user_id']) || isset($_COOKIE['user_id'])) {
 
 include '../../tema/includes/config.php';
 
-// 🌟 site_settings tablosundan ayarları çek
+
 $settingStmt = $baglanti->query("SELECT * FROM site_settings LIMIT 1");
 $settings = $settingStmt->fetch(PDO::FETCH_ASSOC);
 

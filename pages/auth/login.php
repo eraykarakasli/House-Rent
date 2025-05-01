@@ -1,4 +1,5 @@
 <?php
+session_name('user_session');
 session_start();
 
 // Oturum varsa veya çerezle giriş yapılmışsa → direkt ana sayfaya yönlendir
@@ -9,13 +10,13 @@ if (isset($_SESSION['user_id']) || isset($_COOKIE['user_id'])) {
 
 include '../../tema/includes/config.php';
 
-// 🌟 site_settings tablosundan ayarları çek
+// site_settings tablosundan ayarları çek
 $settingStmt = $baglanti->query("SELECT * FROM site_settings LIMIT 1");
 $settings = $settingStmt->fetch(PDO::FETCH_ASSOC);
 
 $message = '';
 
-// Eğer kullanıcı zaten giriş yapmışsa veya cookie varsa → oturum aç
+// Cookie ile login kontrolü
 if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
     $_SESSION['user_id'] = $_COOKIE['user_id'];
     $_SESSION['user_name'] = $_COOKIE['user_name'];
@@ -33,11 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$email]);
         $user = $stmt->fetch();
 
-        if ($user && password_verify($password, $user['password'])) {
+        if ($user && $user['is_banned']) {
+            $message = '<div class="alert alert-danger">Bu hesab bloklanmışdır. Administratorla əlaqə saxlayın.</div>';
+        } elseif ($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['first_name'];
 
-            // Məni xatırla seçildiyse çerezleri oluştur
             if ($remember) {
                 setcookie('user_id', $user['id'], time() + (86400 * 30), "/");
                 setcookie('user_name', $user['first_name'], time() + (86400 * 30), "/");

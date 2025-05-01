@@ -1,5 +1,6 @@
 <?php
 // ✓ Oturum kontrolü ve veritabanı bağlantısı
+session_name('user_session');
 session_start();
 include __DIR__ . '/config.php';
 
@@ -77,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     try {
-        $stmt = $baglanti->prepare("UPDATE ads SET title = ?, category = ?, operation_type = ?, building_condition = ?, area = ?, land_area = ?, certificate = ?, mortgage = ?, renovated = ?, floor = ?, room_count = ?, price = ?, description = ?, city = ?, district = ?, neighborhood = ?, address = ?, latitude = ?, longitude = ?, features = ?, images = ? WHERE id = ? AND user_id = ?");
+        $stmt = $baglanti->prepare("UPDATE ads SET title = ?, category = ?, operation_type = ?, building_condition = ?, area = ?, land_area = ?, certificate = ?, mortgage = ?, renovated = ?, floor = ?, room_count = ?, price = ?, description = ?, city = ?, district = ?, neighborhood = ?, address = ?, latitude = ?, longitude = ?, features = ?, images = ?, status = 0 WHERE id = ? AND user_id = ?");
 
         $stmt->execute([
             $title, $category, $operation_type, $building_condition,

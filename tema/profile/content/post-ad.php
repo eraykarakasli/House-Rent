@@ -227,9 +227,10 @@
     let marker;
 
     document.addEventListener("DOMContentLoaded", function() {
+        // Harita başlat
         map = L.map('map').setView([40.4093, 49.8671], 11);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap'
+            attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
 
         map.on('click', function(e) {
@@ -247,6 +248,7 @@
         });
     });
 
+    // Görsel önizleme ve limit kontrolü
     document.getElementById("images").addEventListener("change", function() {
         const preview = document.getElementById("preview");
         preview.innerHTML = "";
@@ -278,17 +280,94 @@
         });
     });
 
+    // Step arası geçiş
     function goToStep(stepNumber) {
+        // Önce aktif adımı bul
+        const currentStep = document.querySelector(".step.active");
+
+        // Şu anki adımdaki input, select, textarea, radio'ları kontrol et
+        const inputs = currentStep.querySelectorAll("input, select, textarea");
+        let valid = true;
+
+        inputs.forEach(input => {
+            if (input.type === "radio") {
+                const name = input.name;
+                const checked = currentStep.querySelectorAll(`input[name="${name}"]:checked`).length;
+                if (checked === 0) {
+                    valid = false;
+                }
+            } else if (input.type !== "file") {
+                if (!input.value || input.value.trim() === "") {
+                    valid = false;
+                }
+            }
+        });
+
+        if (!valid) {
+            alert("Zəhmət olmasa bu addımdakı bütün tələb olunan sahələri doldurun.");
+            return; // Diğer stepe geçilmesin
+        }
+
+        // Eğer validse adımı değiştir
         const steps = document.querySelectorAll('.step');
         steps.forEach(step => step.classList.remove('active'));
         document.querySelector('#step' + stepNumber).classList.add('active');
+
+        // Harita adımına geçerken boyut güncelle
         if (stepNumber === 3 && typeof map !== 'undefined') {
             setTimeout(() => {
                 map.invalidateSize();
             }, 200);
         }
     }
+
+    // Form gönderilmeden önce kontrol
+    document.getElementById("adFormStep4").addEventListener("submit", function(e) {
+        // 1. Boş alanlar kontrolü
+        const requiredFields = [
+            "title", "category", "operation_type", "building_condition",
+            "area", "floor", "room_count", "price", "description",
+            "city", "district", "neighborhood", "address"
+        ];
+
+        for (let name of requiredFields) {
+            const input = document.querySelector(`[name="${name}"]`);
+            if (input && (!input.value || input.value.trim() === "")) {
+                alert("Zəhmət olmasa bütün tələb olunan sahələri doldurun.");
+                e.preventDefault();
+                return;
+            }
+        }
+
+        // 2. Radio butonlar kontrolü
+        const radios = ["certificate", "mortgage", "renovated"];
+        for (let name of radios) {
+            if (document.querySelectorAll(`input[name="${name}"]:checked`).length === 0) {
+                alert("Zəhmət olmasa 'Çıxarış', 'İpoteka' və 'Təmirli' seçimlərini qeyd edin.");
+                e.preventDefault();
+                return;
+            }
+        }
+
+        // 3. Harita koordinatı kontrolü
+        const lat = document.getElementById("latitude").value;
+        const lng = document.getElementById("longitude").value;
+        if (!lat || !lng) {
+            alert("Zəhmət olmasa xəritədən konum seçin.");
+            e.preventDefault();
+            return;
+        }
+
+        // 4. Görsel sayısı kontrolü
+        const imageInput = document.getElementById("images");
+        if (imageInput.files.length < 5) {
+            alert("Zəhmət olmasa ən azı 5 şəkil seçin.");
+            e.preventDefault();
+            return;
+        }
+    });
 </script>
+
 
 <style>
     .step {
@@ -297,5 +376,15 @@
 
     .step.active {
         display: block;
+    }
+
+    @media (max-width: 575.98px) {
+        .form-check {
+            font-size: 14px;
+        }
+    }
+
+    .is-invalid {
+        border: 1px solid red;
     }
 </style>

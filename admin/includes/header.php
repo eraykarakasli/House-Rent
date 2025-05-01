@@ -33,6 +33,7 @@ $faviconPath = '../' . ($settings['favicon'] ?? 'assets/icon.png'); // fallback
 
     <!-- Özel Stil -->
     <link rel="stylesheet" href="../assets/css/style.css">
+    
 </head>
 
 

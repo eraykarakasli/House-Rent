@@ -1,8 +1,8 @@
 <?php
+include './includes/session_check.php';
 include './includes/config.php';
 include './includes/header.php';
 include './includes/sidebar.php';
-include './includes/session_check.php';
 
 $stmt = $baglanti->prepare("SELECT * FROM site_settings WHERE id = 1");
 $stmt->execute();
@@ -70,8 +70,17 @@ if (isset($_POST['save'])) {
 <!-- Summernote JS -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js"></script>
 
-<div class="container-fluid p-4" style="max-width: 720px;">
-    <h3 class="mb-4">Sayt Ayarları</h3>
+<div class="flex-grow-1 p-4" style="height: 100vh; overflow-y: auto;">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div class="d-flex align-items-center">
+            <!-- Toggle Butonu -->
+            <button class="btn btn-outline-dark d-lg-none me-3" id="toggleSidebar">
+                <i class="bi bi-list"></i>
+            </button>
+            <h3 class="mb-0">Sayt Ayarları</h3>
+        </div>
+    </div>
+
 
     <?php if (isset($_GET['status']) && $_GET['status'] == 'success'): ?>
         <div class="alert alert-success">Məlumatlar uğurla yadda saxlanıldı.</div>
@@ -84,8 +93,8 @@ if (isset($_POST['save'])) {
         </div>
 
         <div class="col-12">
-            <label class="form-label">Sayt Haqqında:</label>
-            <textarea name="site_description" class="form-control" rows="4" required><?= htmlspecialchars($siteDescription) ?></textarea>
+            <label class="form-label">Sayt Description:</label>
+            <textarea name="site_description" class="form-control" rows="2" required><?= htmlspecialchars($siteDescription) ?></textarea>
         </div>
 
         <div class="col-12">
@@ -140,7 +149,7 @@ if (isset($_POST['save'])) {
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         $('#terms').summernote({
             height: 200,
             placeholder: "İstifadəçi razılaşması mətnini buraya yazın..."
