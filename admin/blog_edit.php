@@ -57,7 +57,6 @@ include './includes/sidebar.php';
 <div class="flex-grow-1 position-relative" id="main-content">
   <div class="container my-5">
 
-    <!-- Başlık ve Menü Butonu -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
       <div class="d-flex align-items-center">
         <button class="btn btn-outline-dark d-lg-none me-3" id="toggleSidebar">

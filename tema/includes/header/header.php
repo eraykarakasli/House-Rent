@@ -25,6 +25,8 @@ $site_logo = '/' . ltrim($site['logo'] ?? 'assets/icon.png', '/');
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <title><?= htmlspecialchars($site_title) ?></title>
     <meta name="keywords" content="emlak, ev, kiraye, ev alqi satqisi, bakida evler, emlak saytlari, satiliq evler, ev elanlari, kiraye evler, gundelik evler, çıxarışın yoxlanılması, bina az, yeniemlak, yeni emlak, bakida satilan evler, villa evler, vip evler">
+    <meta name="description" content="<?= htmlspecialchars($site['sayt_haqqinda'] ?? 'Emlak elan saytıdır') ?>">
+
 </head>
 
 <body>

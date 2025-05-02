@@ -101,7 +101,7 @@ foreach ($categories as $catKey => $catName):
             </button>
         </div>
         <div class="w-100 text-center mt-3">
-            <a href="/pages/ads/ads.php?category=<?= $catKey ?>" class="btn btn-dark btn-sm p-2 fs-6 rounded-3">Bütün <?= $catName ?> elanları</a>
+            <a href="/pages/ads/ads.php?category=<?= $catKey ?>" class="btn btn-sm p-2 fs-6 rounded-3 fw-semibold" style="background-color: #031f26; color: white;">Bütün <?= $catName ?> elanları</a>
         </div>
     </div>
 <?php endforeach; ?>

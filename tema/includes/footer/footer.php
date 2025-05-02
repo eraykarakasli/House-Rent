@@ -30,7 +30,7 @@ $staticPages = $pageStmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="col-12 col-md-6 col-lg-3">
                 <img src="<?= htmlspecialchars($site_logo) ?>" alt="Logo" style="height: 40px;">
                 <p class="mt-2 text-muted"><?= htmlspecialchars($about) ?></p>
-                <small class="text-muted">© Copyright 2025 Qbit Technologies MMC.<br>Bütün hüquqlar qorunur.</small>
+                <small class="text-muted">© Copyright 2025 @eraykarakasli<br>Bütün hüquqlar qorunur.</small>
             </div>
 
             <!-- Dinamik Menyu -->

@@ -72,7 +72,6 @@ $ads = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!-- Main Content -->
 <div class="flex-grow-1 position-relative" id="main-content">
   <div class="container-fluid px-3 px-md-4 my-4">
-    <!-- Başlık ve Menü Butonu -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
       <div class="d-flex align-items-center">
         <button class="btn btn-outline-dark d-lg-none me-3" id="toggleSidebar">
@@ -82,7 +81,6 @@ $ads = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </div>
     </div>
 
-    <!-- Durum Mesajları -->
     <?php if (isset($_GET['status'])): ?>
       <?php if ($_GET['status'] == 'deleted'): ?>
         <div class="alert alert-danger">🗑️ Elan silindi.</div>
@@ -95,15 +93,13 @@ $ads = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <?php endif; ?>
     <?php endif; ?>
 
-    <!-- Arama -->
     <form method="get" class="mb-4">
       <div class="input-group">
         <input type="text" name="search" class="form-control" placeholder="ID, Başlıq və ya Kateqoriya ilə axtar..." value="<?= htmlspecialchars($search) ?>">
         <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Axtar</button>
       </div>
     </form>
-
-    <!-- Tablo -->
+    
     <div class="card shadow-sm rounded-4">
       <div class="card-body p-0">
         <div class="table-responsive">

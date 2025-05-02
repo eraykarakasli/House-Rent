@@ -175,9 +175,9 @@
 
                         const badgeContainer = document.getElementById('mapCardBadges');
                         badgeContainer.innerHTML = '';
-                        if (ad.certificate == 1) badgeContainer.innerHTML += '<span class="btn btn-success btn-sm rounded-circle p-1" title="Çıxarış var"><i class="bi bi-clipboard-check-fill"></i></span>';
-                        if (ad.mortgage == 1) badgeContainer.innerHTML += '<span class="btn btn-warning btn-sm rounded-circle p-1" title="İpoteka var"><i class="bi bi-percent"></i></span>';
-                        if (ad.renovated == 1) badgeContainer.innerHTML += '<span class="btn btn-danger btn-sm rounded-circle p-1" title="Təmirli"><i class="bi bi-hammer"></i></span>';
+                        if (ad.certificate == 1) badgeContainer.innerHTML += '<span class="btn btn-success btn-sm rounded-circle " title="Çıxarış var"><i class="bi bi-clipboard-check-fill"></i></span>';
+                        if (ad.mortgage == 1) badgeContainer.innerHTML += '<span class="btn btn-warning btn-sm rounded-circle " title="İpoteka var"><i class="bi bi-percent"></i></span>';
+                        if (ad.renovated == 1) badgeContainer.innerHTML += '<span class="btn btn-danger btn-sm rounded-circle " title="Təmirli"><i class="bi bi-hammer"></i></span>';
 
                         const createdAt = new Date(ad.created_at);
                         const day = String(createdAt.getDate()).padStart(2, '0');

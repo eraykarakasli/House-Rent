@@ -67,13 +67,11 @@ if (isset($_POST['save'])) {
 
 <!-- Summernote CSS -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.css" rel="stylesheet">
-<!-- Summernote JS -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js"></script>
 
 <div class="flex-grow-1 p-4" style="height: 100vh; overflow-y: auto;">
     <div class="d-flex align-items-center justify-content-between mb-4">
         <div class="d-flex align-items-center">
-            <!-- Toggle Butonu -->
             <button class="btn btn-outline-dark d-lg-none me-3" id="toggleSidebar">
                 <i class="bi bi-list"></i>
             </button>

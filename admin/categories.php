@@ -55,13 +55,12 @@ if (isset($_GET['delete'])) {
     exit;
 }
 
-// Kategorileri çek
+
 $categories = $baglanti->query("SELECT * FROM categories ORDER BY order_num ASC")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="container my-5">
     <div class="row">
-        <!-- Kategori ekleme formu -->
         <div class="col-lg-6 mb-4">
             <div class="card border-0 shadow-sm rounded-4">
                 <div class="card-body">
