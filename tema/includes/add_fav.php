@@ -1,43 +1,51 @@
 <?php
+// Oturum başlat
 session_name('user_session');
 session_start();
+
+// Yanıt türü JSON
+header('Content-Type: application/json');
+
+// Veritabanı bağlantısı
 include "../../tema/includes/config.php";
 
+// Kullanıcı ID'si kontrolü
+$userId = $_SESSION['user_id'] ?? null;
+$adId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-
-$userId = $_SESSION['user_id']; 
+// Geçersizlik kontrolü
+if (!$userId || !$adId) {
+    echo json_encode(['success' => false, 'message' => 'Geçərsiz istifadəçi və ya elan ID-si.']);
+    exit;
+}
 
 // Kullanıcının favorilerini al
 $stmt = $baglanti->prepare("SELECT favorites FROM users WHERE id = ?");
 $stmt->execute([$userId]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Favoriler varsa JSON'dan array'e çevir
+// JSON'dan diziye çevir
 $favorites = json_decode($user['favorites'] ?? '[]', true);
 
-// Eğer favorilere yeni bir ilan eklenmişse
-$adId = isset($_GET['id']) ? (int) $_GET['id'] : 0;
-if (!$adId) {
-    echo "Geçersiz ilan ID'si.";
-    exit;
-}
-
-// Favorilerde zaten var mı kontrol et
+// Favori ekle/çıkar işlemi
 if (in_array($adId, $favorites)) {
-    // Favorilerden çıkar
     $favorites = array_diff($favorites, [$adId]);
-    $action = 'removed'; 
+    $action = 'removed';
 } else {
-    // Favorilere ekle
     $favorites[] = $adId;
-    $action = 'added'; 
+    $action = 'added';
 }
 
-// Favoriler verisini güncelle
+// Veritabanını güncelle
 $stmt = $baglanti->prepare("UPDATE users SET favorites = ? WHERE id = ?");
-$stmt->execute([json_encode(array_values($favorites)), $userId]);
+$success = $stmt->execute([json_encode(array_values($favorites)), $userId]);
 
-// Favorilerden ekleme veya çıkarma işlemi tamamlandıktan sonra geri yönlendir
-header("Location: " . $_SERVER['HTTP_REFERER']);
+// JSON yanıt döndür
+echo json_encode([
+    'success' => $success,
+    'action' => $action,
+    'id' => $adId
+]);
 exit;
+
 ?>

@@ -109,30 +109,55 @@ foreach ($categories as $catKey => $catName):
 <script>
     function scrollSlider(id, direction) {
         const slider = document.getElementById(id);
-        const scrollAmount = 320;
+        const firstCard = slider.querySelector('div[style*="width"]');
+        const scrollAmount = firstCard ? firstCard.clientWidth + 16 : 320; // 16: gap aralığı
         slider.scrollBy({
             left: direction * scrollAmount,
             behavior: 'smooth'
         });
     }
 
+
     function toggleFavorite(e, adId) {
-        e.preventDefault();
-        e.stopPropagation();
-        fetch('../../tema/includes/add_fav.php?id=' + adId)
-            .then(() => location.reload());
-    }
+    e.preventDefault();
+    e.stopPropagation();
+
+    const icon = e.currentTarget.querySelector("i");
+
+    fetch('../../tema/includes/add_fav.php?id=' + adId)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                if (data.action === 'added') {
+                    icon.classList.remove("bi-heart");
+                    icon.classList.add("bi-heart-fill", "text-danger");
+                } else {
+                    icon.classList.remove("bi-heart-fill", "text-danger");
+                    icon.classList.add("bi-heart");
+                }
+            } else {
+                alert("Favori işlemi başarısız: " + data.message);
+            }
+        })
+        .catch(err => console.error("Hata:", err));
+}
+
+
+
 </script>
 <style>
     .slider-scroll {
         scrollbar-width: none;
-        /* Firefox */
         -ms-overflow-style: none;
-        /* IE 10+ */
     }
 
     .slider-scroll::-webkit-scrollbar {
         display: none;
-        /* Chrome, Safari, Opera */
+    }
+
+    @media (max-width: 575.98px) {
+        .slider-scroll>div[style*="width: 250px"] {
+            width: 100% !important;
+        }
     }
 </style>
