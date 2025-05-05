@@ -1,63 +1,84 @@
 <?php
+ob_start();
 session_name('user_session');
 session_start();
-
-// Oturum varsa veya çerezle giriş yapılmışsa → direkt ana sayfaya yönlendir
-if (isset($_SESSION['user_id']) || isset($_COOKIE['user_id'])) {
-    header("Location: /index.php");
-    exit;
+include '../../tema/includes/config.php';
+function isUserBanned($id, $db)
+{
+  $stmt = $db->prepare("SELECT is_banned FROM users WHERE id = ?");
+  $stmt->execute([$id]);
+  $result = $stmt->fetch(PDO::FETCH_ASSOC);
+  return isset($result['is_banned']) && $result['is_banned'] == 1;
 }
 
-include '../../tema/includes/config.php';
+if (
+  (isset($_SESSION['user_id']) && isUserBanned($_SESSION['user_id'], $baglanti)) ||
+  (isset($_COOKIE['user_id']) && isUserBanned($_COOKIE['user_id'], $baglanti))
+) {
+  // Banlıysa çerezleri temizle ve oturumu bitir
+  setcookie('user_id', '', time() - 3600, "/");
+  setcookie('user_name', '', time() - 3600, "/");
+  session_unset();
+  session_destroy();
+
+  header("Location: login.php?banned=1");
+  exit;
+}
+
+
 
 // site_settings tablosundan ayarları çek
 $settingStmt = $baglanti->query("SELECT * FROM site_settings LIMIT 1");
 $settings = $settingStmt->fetch(PDO::FETCH_ASSOC);
 
 $message = '';
+if (isset($_GET['banned']) && $_GET['banned'] == 1) {
+  $message = '<div class="alert alert-danger">Bu hesab bloklanmışdır. Administratorla əlaqə saxlayın.</div>';
+}
 
 // Cookie ile login kontrolü
 if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
-    $_SESSION['user_id'] = $_COOKIE['user_id'];
-    $_SESSION['user_name'] = $_COOKIE['user_name'];
-    header("Location: index.php");
-    exit;
+  $_SESSION['user_id'] = $_COOKIE['user_id'];
+  $_SESSION['user_name'] = $_COOKIE['user_name'];
+  header("Location: index.php");
+  exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email']);
-    $password = $_POST['password'];
-    $remember = isset($_POST['remember']);
+  $email = trim($_POST['email']);
+  $password = $_POST['password'];
+  $remember = isset($_POST['remember']);
 
-    if ($email && $password) {
-        $stmt = $baglanti->prepare("SELECT * FROM users WHERE email = ?");
-        $stmt->execute([$email]);
-        $user = $stmt->fetch();
+  if ($email && $password) {
+    $stmt = $baglanti->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch();
 
-        if ($user && $user['is_banned']) {
-            $message = '<div class="alert alert-danger">Bu hesab bloklanmışdır. Administratorla əlaqə saxlayın.</div>';
-        } elseif ($user && password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_name'] = $user['first_name'];
+    if ($user && $user['is_banned']) {
+      $message = '<div class="alert alert-danger">Bu hesab bloklanmışdır. Administratorla əlaqə saxlayın.</div>';
+    } elseif ($user && password_verify($password, $user['password'])) {
+      $_SESSION['user_id'] = $user['id'];
+      $_SESSION['user_name'] = $user['first_name'];
 
-            if ($remember) {
-                setcookie('user_id', $user['id'], time() + (86400 * 30), "/");
-                setcookie('user_name', $user['first_name'], time() + (86400 * 30), "/");
-            }
+      if ($remember) {
+        setcookie('user_id', $user['id'], time() + (86400 * 30), "/");
+        setcookie('user_name', $user['first_name'], time() + (86400 * 30), "/");
+      }
 
-            header("Location: /index.php");
-            exit;
-        } else {
-            $message = '<div class="alert alert-danger">E-poçt və ya parol yalnışdır.</div>';
-        }
+      header("Location: /index.php");
+      exit;
     } else {
-        $message = '<div class="alert alert-warning">Zəhmət olmasa bütün sahələri doldurun.</div>';
+      $message = '<div class="alert alert-danger">E-poçt və ya parol yalnışdır.</div>';
     }
+  } else {
+    $message = '<div class="alert alert-warning">Zəhmət olmasa bütün sahələri doldurun.</div>';
+  }
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="az">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -135,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     const passwordInput = document.getElementById("passwordInput");
     const toggleIcon = document.getElementById("toggleIcon");
 
-    togglePassword.addEventListener("click", function () {
+    togglePassword.addEventListener("click", function() {
       const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
       passwordInput.setAttribute("type", type);
       toggleIcon.classList.toggle("bi-eye");
@@ -143,4 +164,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     });
   </script>
 </body>
+
 </html>
