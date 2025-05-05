@@ -80,7 +80,7 @@ foreach ($categories as $catKey => $catName):
                                 <div class="mb-2 text-secondary d-flex align-items-center py-2">
                                     <i class="bi bi-geo-alt me-1"></i>
                                     <span class="text-truncate d-inline-block" style="max-width: calc(100% - 1rem);">
-                                        <?= htmlspecialchars($ad['address']) ?>
+                                        <?= htmlspecialchars($ad['neighborhood']) ?>
                                     </span>
                                 </div>
 
