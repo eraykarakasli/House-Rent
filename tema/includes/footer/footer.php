@@ -1,7 +1,7 @@
 <?php
 include_once __DIR__ . "/../config.php";
 
-// Site ayarlarını çek
+// site settings
 $stmt = $baglanti->prepare("SELECT * FROM site_settings ORDER BY id DESC LIMIT 1");
 $stmt->execute();
 $settings = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -13,7 +13,7 @@ $instagram = $settings['instagram'] ?? '';
 $about = $settings['sayt_haqqinda'] ?? '';
 $site_logo = '/' . ltrim($settings['logo'] ?? 'assets/icon.png', '/');
 
-// Static page'leri al
+// Static pages
 $pageStmt = $baglanti->prepare("SELECT title, slug FROM static_pages WHERE slug IS NOT NULL AND title IS NOT NULL ORDER BY id ASC");
 $pageStmt->execute();
 $staticPages = $pageStmt->fetchAll(PDO::FETCH_ASSOC);
@@ -25,13 +25,18 @@ $staticPages = $pageStmt->fetchAll(PDO::FETCH_ASSOC);
 <footer class="bg-light py-5 mt-5">
     <div class="container">
         <div class="row justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 gx-5 gy-5">
-
             <!-- Logo ve açıklama -->
-            <div class="col-12 col-md-6 col-lg-3 text-center text-md-start">
-                <img src="<?= htmlspecialchars($site_logo) ?>" alt="Logo" style="height: 40px;">
-                <p class="mt-2 text-muted"><?= htmlspecialchars($about) ?></p>
-                <small class="text-muted d-block">© Copyright 2025 @eraykarakasli<br>Bütün hüquqlar qorunur.</small>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="d-flex flex-column flex-md-row align-items-center text-center text-md-start gap-1">
+                    <img src="<?= htmlspecialchars($site_logo) ?>" alt="Logo" style="height: 40px;">
+                    <p class="mb-0 fw-bold" style="color: #0d98ba;"><?= htmlspecialchars($about) ?></p>
+                </div>
+                <small class="text-muted d-block mt-2 text-center text-md-start">
+                    © Copyright 2025 @eraykarakasli<br>Bütün hüquqlar qorunur.
+                </small>
             </div>
+
+
 
             <!-- Dinamik Menyu -->
             <div class="col-6 col-lg-2 text-center text-md-start">
@@ -101,4 +106,5 @@ $staticPages = $pageStmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 </body>
+
 </html>
