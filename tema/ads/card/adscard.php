@@ -131,25 +131,30 @@ $ads = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <strong class="fs-6"><?= htmlspecialchars(number_format($ad['price'], 0, ',', ' ')) ?> AZN</strong>
                                 <small class="text-muted" style="font-size: 12px;"><?= date("d.m.Y", strtotime($ad['created_at'])) ?></small>
                             </div>
+
                             <div class="mb-2 text-secondary d-flex align-items-center py-2">
                                 <i class="bi bi-geo-alt me-1"></i>
-                                <span><?= htmlspecialchars($ad['address']) ?></span>
+                                <span class="text-truncate d-inline-block" style="max-width: calc(100% - 1rem);">
+                                    <?= htmlspecialchars($ad['address']) ?>
+                                </span>
                             </div>
-                            <div class="d-flex justify-content-between text-secondary mt-2">
-                                <div class="d-flex align-items-center flex-fill">
-                                    <i class="bi bi-building me-1"></i>
-                                    <span><?= htmlspecialchars($ad['floor']) ?></span>
+
+                            <div class="d-flex text-secondary mt-2" style="gap: 0.5rem;">
+                                <div class="d-flex flex-column align-items-center justify-content-center flex-fill text-center">
+                                    <i class="bi bi-building"></i>
+                                    <span class="small text-truncate"><?= htmlspecialchars($ad['floor']) ?></span>
                                 </div>
-                                <div class="d-flex align-items-center flex-fill">
-                                    <i class="bi bi-door-open me-1"></i>
-                                    <span><?= htmlspecialchars($ad['room_count']) ?> otaq</span>
+                                <div class="d-flex flex-column align-items-center justify-content-center flex-fill text-center">
+                                    <i class="bi bi-door-open"></i>
+                                    <span class="small text-truncate"><?= htmlspecialchars($ad['room_count']) ?> otaq</span>
                                 </div>
-                                <div class="d-flex align-items-center flex-fill">
-                                    <i class="bi bi-aspect-ratio me-1"></i>
-                                    <span><?= htmlspecialchars($ad['area']) ?>m²</span>
+                                <div class="d-flex flex-column align-items-center justify-content-center flex-fill text-center">
+                                    <i class="bi bi-aspect-ratio"></i>
+                                    <span class="small text-truncate"><?= htmlspecialchars($ad['area']) ?>m²</span>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </a>
             </div>
