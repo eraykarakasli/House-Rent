@@ -1,5 +1,5 @@
 <?php
-include "../../tema/includes/config.php"; 
+include "../../tema/includes/config.php";
 
 $userId = $_SESSION['user_id'];
 
@@ -12,7 +12,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 $favorites = json_decode($user['favorites'] ?? '[]', true);
 
 // Parametreyi oluşturma
-$ads = []; 
+$ads = [];
 if (!empty($favorites)) {
     // Favoriler boş değilse, sorgu yapalım
     $placeholders = str_repeat('?,', count($favorites) - 1) . '?';
@@ -21,7 +21,7 @@ if (!empty($favorites)) {
     $stmt = $baglanti->prepare("SELECT * FROM ads WHERE id IN ($placeholders)");
 
     // Execute query with all favorite IDs
-    $stmt->execute($favorites);  
+    $stmt->execute($favorites);
     $ads = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
@@ -55,9 +55,10 @@ if (!empty($favorites)) {
                             <div class="position-relative" style="height: 200px;">
                                 <img src="<?= htmlspecialchars($firstImage) ?>" class="d-block w-100" alt="İlan Fotoğrafı" style="height: 200px; object-fit: cover;">
                                 <!-- Favori ekle/çıkar butonu -->
-                                <a href="../../tema/includes/add_fav.php?id=<?= $ad['id'] ?>" class="btn btn-light btn-sm rounded-circle position-absolute top-0 end-0 m-2">
+                                <a href="#" class="btn btn-light btn-sm rounded-circle position-absolute top-0 end-0 m-2" onclick="toggleFavorite(event, <?= $ad['id'] ?>)">
                                     <i class="bi <?= in_array((int)$ad['id'], $favorites) ? 'bi-heart-fill text-danger' : 'bi-heart' ?>"></i>
                                 </a>
+
                             </div>
 
                             <!-- İlan Bilgileri -->
@@ -95,3 +96,54 @@ if (!empty($favorites)) {
         </div>
     <?php endif; ?>
 </div>
+
+<script>
+
+function toggleFavorite(e, adId) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const icon = e.currentTarget.querySelector("i");
+
+    fetch('../../tema/includes/add_fav.php?id=' + adId)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // İkonu güncelle
+                const allIcons = document.querySelectorAll(`a[onclick*="toggleFavorite"][onclick*="${adId}"] i`);
+                allIcons.forEach(ic => {
+                    ic.classList.remove("bi-heart", "bi-heart-fill", "text-danger");
+                    if (data.action === "added") {
+                        ic.classList.add("bi-heart-fill", "text-danger");
+                    } else {
+                        ic.classList.add("bi-heart");
+                    }
+                });
+
+                // Eğer bulunduğumuz sayfa favoriler sayfasıysa kartı kaldır
+                if (window.location.href.includes("favorites.php") && data.action === "removed") {
+                    const card = e.currentTarget.closest(".col");
+                    if (card) card.remove();
+
+                    // Eğer hiç kart kalmadıysa uyarı mesajı göster
+                    const remainingCards = document.querySelectorAll(".col");
+                    if (remainingCards.length === 0) {
+                        const container = document.querySelector(".row.row-cols-1");
+                        if (container) {
+                            container.insertAdjacentHTML("beforebegin", `
+                                <div class="alert alert-warning">
+                                    Hələlik seçilmiş elanınız yoxdur.
+                                </div>
+                            `);
+                        }
+                    }
+                }
+
+            } else {
+                alert("Favori işlemi başarısız: " + data.message);
+            }
+        })
+        .catch(err => console.error("Hata:", err));
+}
+
+</script>

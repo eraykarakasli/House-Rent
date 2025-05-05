@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 // Admin oturumunu kullanıcı oturumlarından ayırmak için özel bir isim belirliyoruz
 session_name('admin_session');
 session_start();

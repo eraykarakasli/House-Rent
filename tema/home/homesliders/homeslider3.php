@@ -38,37 +38,42 @@ foreach ($categories as $catKey => $catName):
                     $images = json_decode($ad['images'], true);
                     $firstImage = !empty($images) ? "../../tema/" . ltrim($images[0], '/') : "../../assets/no-image.webp";
                     ?>
-                    <div onclick="window.location.href='../../pages/adsdetail/adsdetail.php?id=<?= $ad['id'] ?>'" class="text-decoration-none text-dark" style="cursor:pointer; width: 250px; flex: 0 0 auto;">
+                    <div class="text-decoration-none text-dark" style="cursor:pointer; width: 250px; flex: 0 0 auto;">
                         <div class="card h-100 position-relative shadow-sm border-0 rounded-4 overflow-hidden w-100">
-                            <div class="position-relative" style="height: 180px;">
+                            <!-- Resim ve favori butonu -->
+                            <div class="position-relative" style="height: 180px;" onclick="window.location.href='../../pages/adsdetail/adsdetail.php?id=<?= $ad['id'] ?>'">
                                 <img src="<?= htmlspecialchars($firstImage) ?>" class="d-block w-100" alt="İlan Fotoğrafı" style="height: 180px; object-fit: cover;">
-                                <a href="#" class="btn btn-light btn-sm rounded-circle position-absolute top-0 end-0 m-2 " onclick="toggleFavorite(event, <?= $ad['id'] ?>)">
+
+                                <!-- Favori butonu -->
+                                <a href="#" class="btn btn-light btn-sm rounded-circle position-absolute top-0 end-0 m-2" onclick="toggleFavorite(event, <?= $ad['id'] ?>)">
                                     <i class="bi <?= in_array((int)$ad['id'], $userFavorites) ? 'bi-heart-fill text-danger' : 'bi-heart' ?>"></i>
                                 </a>
+
+                                <!-- Ek ikonlar -->
                                 <div class="position-absolute top-0 start-0 m-2">
                                     <?php if (!empty($ad['certificate']) && $ad['certificate'] == 1): ?>
-                                        <span class="btn btn-success btn-sm rounded-circle " title="Çıxarış var">
+                                        <span class="btn btn-success btn-sm rounded-circle" title="Çıxarış var">
                                             <i class="bi bi-clipboard-check-fill"></i>
                                         </span>
                                     <?php endif; ?>
                                     <?php if (!empty($ad['mortgage']) && $ad['mortgage'] == 1): ?>
-                                        <span class="btn btn-warning btn-sm rounded-circle " title="İpoteka var">
+                                        <span class="btn btn-warning btn-sm rounded-circle" title="İpoteka var">
                                             <i class="bi bi-percent"></i>
                                         </span>
                                     <?php endif; ?>
                                     <?php if (!empty($ad['renovated']) && $ad['renovated'] == 1): ?>
-                                        <span class="btn btn-danger btn-sm rounded-circle " title="Təmirli">
+                                        <span class="btn btn-danger btn-sm rounded-circle" title="Təmirli">
                                             <i class="bi bi-hammer"></i>
                                         </span>
                                     <?php endif; ?>
                                 </div>
                             </div>
+
+                            <!-- Bilgi bölümü -->
                             <div class="p-2">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <strong class="fs-6"><?= htmlspecialchars(number_format($ad['price'], 0, ',', ' ')) ?> AZN</strong>
-                                    <small class="text-muted" style="font-size: 12px;">
-                                        <?= date("d.m.Y", strtotime($ad['created_at'])) ?>
-                                    </small>
+                                    <small class="text-muted" style="font-size: 12px;"><?= date("d.m.Y", strtotime($ad['created_at'])) ?></small>
                                 </div>
                                 <div class="mb-2 text-secondary d-flex align-items-center py-2">
                                     <i class="bi bi-geo-alt me-1"></i>
@@ -91,6 +96,7 @@ foreach ($categories as $catKey => $catName):
                             </div>
                         </div>
                     </div>
+
                 <?php endforeach; ?>
             </div>
             <button class="btn btn-light position-absolute top-50 start-0 translate-middle-y shadow rounded-circle" onclick="scrollSlider('slider-<?= $catKey ?>', -1)">
@@ -117,33 +123,30 @@ foreach ($categories as $catKey => $catName):
         });
     }
 
-
     function toggleFavorite(e, adId) {
-    e.preventDefault();
-    e.stopPropagation();
+        e.preventDefault();
+        e.stopPropagation();
 
-    const icon = e.currentTarget.querySelector("i");
+        const allIcons = document.querySelectorAll(`a[onclick*="toggleFavorite"][onclick*="${adId}"] i`);
 
-    fetch('../../tema/includes/add_fav.php?id=' + adId)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                if (data.action === 'added') {
-                    icon.classList.remove("bi-heart");
-                    icon.classList.add("bi-heart-fill", "text-danger");
+        fetch('../../tema/includes/add_fav.php?id=' + adId)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    allIcons.forEach(icon => {
+                        icon.classList.remove("bi-heart", "bi-heart-fill", "text-danger");
+                        if (data.action === "added") {
+                            icon.classList.add("bi-heart-fill", "text-danger");
+                        } else {
+                            icon.classList.add("bi-heart");
+                        }
+                    });
                 } else {
-                    icon.classList.remove("bi-heart-fill", "text-danger");
-                    icon.classList.add("bi-heart");
+                    alert("Favori işlemi başarısız: " + data.message);
                 }
-            } else {
-                alert("Favori işlemi başarısız: " + data.message);
-            }
-        })
-        .catch(err => console.error("Hata:", err));
-}
-
-
-
+            })
+            .catch(err => console.error("Hata:", err));
+    }
 </script>
 <style>
     .slider-scroll {

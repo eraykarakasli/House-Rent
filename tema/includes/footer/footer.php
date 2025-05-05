@@ -24,19 +24,19 @@ $staticPages = $pageStmt->fetchAll(PDO::FETCH_ASSOC);
 
 <footer class="bg-light py-5 mt-5">
     <div class="container">
-        <div class="row justify-content-between row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 gx-5 gy-5">
+        <div class="row justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 gx-5 gy-5">
 
             <!-- Logo ve açıklama -->
-            <div class="col-12 col-md-6 col-lg-3">
+            <div class="col-12 col-md-6 col-lg-3 text-center text-md-start">
                 <img src="<?= htmlspecialchars($site_logo) ?>" alt="Logo" style="height: 40px;">
                 <p class="mt-2 text-muted"><?= htmlspecialchars($about) ?></p>
-                <small class="text-muted">© Copyright 2025 @eraykarakasli<br>Bütün hüquqlar qorunur.</small>
+                <small class="text-muted d-block">© Copyright 2025 @eraykarakasli<br>Bütün hüquqlar qorunur.</small>
             </div>
 
             <!-- Dinamik Menyu -->
-            <div class="col-6 col-lg-2">
+            <div class="col-6 col-lg-2 text-center text-md-start">
                 <h6 class="fw-bold">Menyu</h6>
-                <ul class="list-unstyled">
+                <ul class="list-unstyled d-inline-block text-center text-md-start">
                     <?php foreach ($staticPages as $page): ?>
                         <li>
                             <a href="/pages/info/static_page.php?slug=<?= urlencode($page['slug']) ?>" class="text-decoration-none text-muted">
@@ -49,9 +49,9 @@ $staticPages = $pageStmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
 
             <!-- Dəstək -->
-            <div class="col-6 col-lg-2">
+            <div class="col-6 col-lg-2 text-center text-md-start">
                 <h6 class="fw-bold">Dəstək</h6>
-                <ul class="list-unstyled">
+                <ul class="list-unstyled d-inline-block text-center text-md-start">
                     <li><a href="/pages/info/terms.php" class="text-decoration-none text-muted">İstifadəçi razılaşması</a></li>
                     <li><a href="/pages/info/privacy.php" class="text-decoration-none text-muted">Məxfilik siyasəti</a></li>
                     <li><a href="#" class="text-decoration-none text-muted">Sual-cavablar</a></li>
@@ -59,7 +59,7 @@ $staticPages = $pageStmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
 
             <!-- Əlaqə -->
-            <div class="col">
+            <div class="col text-center text-md-start">
                 <h6 class="fw-bold">Əlaqə</h6>
 
                 <?php if (!empty($phone)): ?>
@@ -98,6 +98,7 @@ $staticPages = $pageStmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 </footer>
+
 
 </body>
 </html>

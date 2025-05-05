@@ -173,9 +173,12 @@ while ($row = $category_stmt->fetch(PDO::FETCH_ASSOC)) {
                     $last_users = $baglanti->query("SELECT first_name, email, created_at FROM users ORDER BY created_at DESC LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($last_users as $u): ?>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <?= htmlspecialchars($u['first_name']) ?> (<?= htmlspecialchars($u['email']) ?>)
+                            <div class="text-truncate" style="max-width: 70%;">
+                                <?= htmlspecialchars($u['first_name']) ?> (<?= htmlspecialchars($u['email']) ?>)
+                            </div>
                             <small class="text-muted"><?= date('d.m.Y', strtotime($u['created_at'])) ?></small>
                         </li>
+
                     <?php endforeach; ?>
                 </ul>
             </div>

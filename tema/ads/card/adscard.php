@@ -103,9 +103,10 @@ $ads = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <div class="card h-100 position-relative shadow-sm border-0 rounded-4 overflow-hidden w-100">
                         <div class="position-relative" style="height: 200px;">
                             <img src="<?= htmlspecialchars($firstImage) ?>" class="d-block w-100" alt="İlan Fotoğrafı" style="height: 200px; object-fit: cover;">
-                            <a href="../../tema/includes/add_fav.php?id=<?= $ad['id'] ?>" class="btn btn-light btn-sm rounded-circle position-absolute top-0 end-0 m-2 p-1">
+                            <a href="#" onclick="toggleFavorite(event, <?= $ad['id'] ?>)" class="btn btn-light btn-sm rounded-circle position-absolute top-0 end-0 m-2 p-1">
                                 <i class="bi <?= in_array((int)$ad['id'], $userFavorites) ? 'bi-heart-fill text-danger' : 'bi-heart' ?> p-1"></i>
                             </a>
+
                             <div class="position-absolute top-0 start-0 m-2">
                                 <?php if (!empty($ad['certificate'])): ?>
                                     <span class="btn btn-success btn-sm rounded-circle p-1" title="Çıxarış var">
@@ -169,3 +170,50 @@ $ads = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </nav>
     <?php endif; ?>
 </div>
+<script>
+    function toggleFavorite(e, adId) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const clickedIcon = e.currentTarget.querySelector("i");
+
+        fetch('../../tema/includes/add_fav.php?id=' + adId, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Tüm ikonları güncelle
+                    const allIcons = document.querySelectorAll(`a[onclick*="toggleFavorite"][onclick*="${adId}"] i`);
+                    allIcons.forEach(icon => {
+                        icon.classList.remove("bi-heart", "bi-heart-fill", "text-danger");
+                        if (data.action === "added") {
+                            icon.classList.add("bi-heart-fill", "text-danger");
+                        } else {
+                            icon.classList.add("bi-heart");
+                        }
+                    });
+
+                    // Eğer bu işlem favorites.php gibi bir sayfadaysa ve kaldırma yapıldıysa kartı DOM'dan da silelim
+                    if (data.action === "removed") {
+                        const card = e.closest(".col");
+                        if (card) {
+                            card.remove();
+
+                            // Eğer hiç favori kalmadıysa uyarı mesajı göster
+                            if (document.querySelectorAll('.col').length === 0) {
+                                const container = document.querySelector('.col-md-8 .row.g-4.mt-1');
+                                if (container) container.innerHTML = `<div class="alert alert-warning">Hələlik seçilmiş elanınız yoxdur.</div>`;
+                            }
+                        }
+                    }
+
+                } else {
+                    alert("Favori işlemi başarısız: " + data.message);
+                }
+            })
+            .catch(err => console.error("Hata:", err));
+    }
+</script>
